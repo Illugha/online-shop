@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop All — LUXE</title>
+  <meta name="description"
+    content="Browse our curated collection of minimalist luxury essentials. Filter by category, price, and size." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">LUXE</a>
+      <nav class="nav-links" id="nav-links">
+        <a class="nav-link active" href="shop.html">Shop All</a>
+        <a class="nav-link" href="shop.html?category=new-arrivals">New Arrivals</a>
+        <a class="nav-link" href="shop.html?category=textiles">Textiles</a>
+        <a class="nav-link" href="shop.html?category=lighting">Lighting</a>
+        <a class="nav-link" href="shop.html?category=dining">Dining</a>
+      </nav>
+      <div class="header-icons">
+        <button class="icon-btn" aria-label="Search">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+        <button class="icon-btn" aria-label="Account">
+          <span class="material-symbols-outlined">person</span>
+        </button>
+        <button class="icon-btn" aria-label="Wishlist">
+          <span class="material-symbols-outlined">favorite</span>
+        </button>
+        <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="cart-badge" id="cart-badge">2</span>
+        </button>
+        <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="menu-toggle">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= MAIN ======= -->
+  <main style="flex-grow:1;">
+    <div class="container" style="padding-top:40px; padding-bottom:80px;">
+
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs" aria-label="Breadcrumb" id="breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="material-symbols-outlined">chevron_right</span>
+        <a href="shop.html">Shop</a>
+        <span class="material-symbols-outlined">chevron_right</span>
+        <span class="current">Shop All</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="shop-header">
+        <div class="shop-header-row">
+          <div>
+            <h1 class="headline-lg" style="color:var(--primary); margin-bottom:8px;">Shop All</h1>
+            <p class="body-md" style="color:var(--on-surface-variant);">Showing 40 items</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div class="select-wrapper">
+              <select class="select-field" id="sort-select">
+                <option>Newest Arrivals</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Popularity</option>
+              </select>
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop Layout -->
+      <div class="shop-layout">
+
+        <!-- Sidebar Filters -->
+        <aside class="shop-sidebar" id="shop-sidebar">
+
+          <!-- Category Filter -->
+          <div class="filter-group">
+            <div class="filter-title" id="filter-category-toggle">
+              Category
+              <span class="material-symbols-outlined">expand_less</span>
+            </div>
+            <div class="filter-options" id="filter-category-options">
+              <label class="checkbox-label">
+                <input type="checkbox" data-category="new-arrivals" />
+                <span>New Arrivals (10)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" data-category="textiles" />
+                <span>Textiles (10)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" data-category="lighting" />
+                <span>Lighting (10)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" data-category="dining" />
+                <span>Dining (10)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Price Filter -->
+          <div class="filter-group">
+            <div class="filter-title" id="filter-price-toggle">
+              Price
+              <span class="material-symbols-outlined">expand_less</span>
+            </div>
+            <div class="price-range" id="filter-price-options">
+              <div class="price-input-wrap">
+                <span class="currency">$</span>
+                <input type="number" class="price-input" placeholder="Min" id="price-min" />
+              </div>
+              <span style="color:var(--on-surface-variant);">-</span>
+              <div class="price-input-wrap">
+                <span class="currency">$</span>
+                <input type="number" class="price-input" placeholder="Max" id="price-max" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Size Filter -->
+          <div class="filter-group">
+            <div class="filter-title" id="filter-size-toggle">
+              Size
+              <span class="material-symbols-outlined">expand_less</span>
+            </div>
+            <div class="size-filter-grid" id="filter-size-options">
+              <button class="size-btn" data-size="XS">XS</button>
+              <button class="size-btn active" data-size="S">S</button>
+              <button class="size-btn" data-size="M">M</button>
+              <button class="size-btn" data-size="L">L</button>
+              <button class="size-btn disabled" data-size="XL">XL</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <div class="shop-content">
+          <div class="product-grid" id="product-grid">
+
+            <!-- Product 1 -->
+            <a class="product-card" href="product.html?id=silk-dress" id="product-1">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqoCl_THlKkARXnvyY14Ds9aRnJQPrsRs-rAuyrq9VRdaztT64JIJapsRkBTVFkRj1zhPXCVpAK54k4ZIcZDHEj-vkWh32l6rW2y5Y1Pmg2uqfF7JJZ3LhYcS5aoXyPasuAu3S1yrJcpukE2UXz1r3c5qnav3HBAxpejisuaAcvYv1B2xQjKjeFlQAuVkA3RGTrmxIPHtitjy2RGWg8NQAPP1SoFuDW5CHnwOmLgM3XdChwD55SsUS4g"
+                  alt="Silk Slip Midi Dress" />
+                <span class="chip chip-secondary">New Arrival</span>
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Silk Slip Midi Dress</h3>
+                  <p class="product-card-variant">Cream</p>
+                </div>
+                <span class="product-card-price">$345</span>
+              </div>
+            </a>
+
+            <!-- Product 2 -->
+            <a class="product-card" href="product.html?id=wool-blazer" id="product-2">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa9ghjuXrGHcgOwuPEgDoium6cH5jaOdSU5sFKAUcuFV0O097U-EwzoNbUqLLKTNMRKDhSx1DLgni-aW4nwkEVpBAHCUyIMYQiaEYAJ8WHl5SydeQ6fQt83ifpvDlDhE-ivmS1ah686xR9ZAOYmJTemNsNIXRWb5q6iXrBeI9jERtFUbHks34gEshdAjv-OcGL3xRPFBTe9Ptxbi0dauyuoluYk6mSVEbNVT_akjoRxK-70p5DYg59PA"
+                  alt="Tailored Wool Blazer" />
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Tailored Wool Blazer</h3>
+                  <p class="product-card-variant">Charcoal</p>
+                </div>
+                <span class="product-card-price">$495</span>
+              </div>
+            </a>
+
+            <!-- Product 3 -->
+            <a class="product-card" href="product.html?id=cashmere-knit" id="product-3">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf5CUAz7IgElVqRuMw2W2xg6gtmEg7kXo_Jfc6nV1fPBNS3aekEHKwr4If1ld-1lqbNgcCFwvsn1P6ogTl8hKOvMbrck4Y5YEhT1WLIqQ6B_8zLSCdI1z07sK2dyvvlYMln04iCW9mw-nS8WG11i5WAZALiEWU5-GuzNE8WUJSxzqNn6DyJvoKj4ryhy5ounRrShQlSKaqajc0wDUoSEzfaes-77GT16v3EzNwUs_D5UIB6hPFznskLg"
+                  alt="Oversized Cashmere Knit" />
+                <span class="chip chip-tertiary">Bestseller</span>
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Oversized Cashmere Knit</h3>
+                  <p class="product-card-variant">Camel</p>
+                </div>
+                <span class="product-card-price">$520</span>
+              </div>
+            </a>
+
+            <!-- Product 4 -->
+            <a class="product-card" href="product.html?id=wide-trouser" id="product-4">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvZ4-oPlxT6NPqLtA-i6s490O3FYOoDCdhU2gZh6kllrL5Sm0l-b4Dq-kJbLJ2Md2zYZKL4kB7UItlKuIyRZrhrt6uZNg0Zrs70Ltls0J64W0GeCFBXLHGSen92_SI6ctPGIOT38oJH9Jc9GUsVD5CE9trjTnBZ9rtFKDZ2157ejNlISIXBHQ-s6HFGadVEGztKjK20zj0TqGxNGtPYAYVvhOELpS9eopmK8Tk6VTCgQmLuuA-Q8NoZw"
+                  alt="Pleated Wide-Leg Trouser" />
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Pleated Wide-Leg Trouser</h3>
+                  <p class="product-card-variant">Olive</p>
+                </div>
+                <span class="product-card-price">$285</span>
+              </div>
+            </a>
+
+            <!-- Product 5 -->
+            <a class="product-card" href="product.html?id=poplin-shirt" id="product-5">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLKG-xOYlyJ7AzCZLQzhtY8-PQz5TggPvg6p7P3Dv3pPy2Xmda6XfsoIovK6CZs4pmTXzSw8puONwFAKOfBiZDBBlZyKc4jvnGa71By4uIoRnD-iToXod6O7zEvC4n12Bo0UTu9Nfmm_FSMaBkVgH2_dr0dm5BzDUuNt3VCK4UEtiyazROFZZvogcBcOLrmhY1WL_b1gsxS8ct-RcvwpibyihFA9BxmuMwROn00gRcPCUsV8aK2nMKkA"
+                  alt="Poplin Boyfriend Shirt" />
+                <span class="chip chip-outline">Low Stock</span>
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Poplin Boyfriend Shirt</h3>
+                  <p class="product-card-variant">Optic White</p>
+                </div>
+                <span class="product-card-price">$195</span>
+              </div>
+            </a>
+
+            <!-- Product 6 -->
+            <a class="product-card" href="product.html?id=structured-tote" id="product-6">
+              <div class="product-card-image">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfWpcH_Vr3y_tmTzjO0d3va5W6Oud19V30ceFG2dJF50d_TQiLgn9XltaNxkFcAeYji2-0oJRh8Dv-I4R7MYq6f0dpFhTyq3SAEa_nCR67J8y1P4823kIABavV65nxDlgbjODX1mw44sJqpiSCZ38xftcGrrzgy6A6o0-02AHbnQLshyDXN8dO1rW2DifGywooOBFFcoR3y_QylUPsGFqt27dMowATWuYhHanfRn732y3UIxOdExgRkg"
+                  alt="Structured Leather Tote" />
+                <button class="quick-add" aria-label="Quick add to cart">
+                  <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                </button>
+              </div>
+              <div class="product-card-info">
+                <div>
+                  <h3 class="product-card-name">Structured Leather Tote</h3>
+                  <p class="product-card-variant">Noir</p>
+                </div>
+                <span class="product-card-price">$650</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination" id="pagination">
+            <button class="page-arrow" aria-label="Previous page">
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span style="color:var(--on-surface-variant); padding:0 8px;">...</span>
+            <button class="page-btn">8</button>
+            <button class="page-arrow" aria-label="Next page">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ======= FOOTER ======= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo" style="font-size:32px; line-height:40px;">LUXE</span>
+        <p class="footer-brand-desc">Elevating everyday essentials through minimalist design and uncompromising quality.
+        </p>
+        <p class="footer-copyright">© 2024 LUXE Professional. All rights reserved.</p>
+      </div>
+      <div>
+        <div class="footer-links" style="margin-top:0;">
+          <a class="footer-link label-sm" href="#">About Us</a>
+          <a class="footer-link label-sm" href="#">Sustainability</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-links" style="margin-top:0;">
+          <a class="footer-link label-sm" href="#">Shipping &amp; Returns</a>
+          <a class="footer-link label-sm" href="#">Contact Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

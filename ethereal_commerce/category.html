@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category - LUXE</title>
+  <meta name="description" content="Explore a curated LUXE collection." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">LUXE</a>
+      <nav class="nav-links" id="nav-links">
+        <a class="nav-link" href="shop.html">Shop All</a>
+        <a class="nav-link" href="shop.html?category=new-arrivals">New Arrivals</a>
+        <a class="nav-link" href="shop.html?category=textiles">Textiles</a>
+        <a class="nav-link" href="shop.html?category=lighting">Lighting</a>
+        <a class="nav-link" href="shop.html?category=dining">Dining</a>
+      </nav>
+      <div class="header-icons">
+        <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
+          <span class="material-symbols-outlined">shopping_bag</span>
+        </button>
+        <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="menu-toggle">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="category-page">
+    <section class="category-hero" id="category-hero">
+      <div class="category-hero-overlay"></div>
+      <div class="container category-hero-content">
+        <nav class="breadcrumbs category-breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="material-symbols-outlined">chevron_right</span>
+          <a href="categories.html">Categories</a>
+          <span class="material-symbols-outlined">chevron_right</span>
+          <span class="current" id="category-breadcrumb">Category</span>
+        </nav>
+        <p class="label-md category-eyebrow">Curated collection</p>
+        <h1 class="display-lg" id="category-title">Category</h1>
+        <p class="body-lg" id="category-description"></p>
+        <a class="btn btn-primary" id="category-shop-link" href="shop.html">Shop</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo" style="font-size:32px; line-height:40px;">LUXE</span>
+        <p class="footer-brand-desc">Elevating everyday living through considered design.</p>
+      </div>
+      <div class="footer-links"><a class="footer-link label-sm" href="categories.html">Categories</a><a
+          class="footer-link label-sm" href="shop.html">Shop All</a></div>
+    </div>
+  </footer>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
