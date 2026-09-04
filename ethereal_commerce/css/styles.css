@@ -2188,3 +2188,248 @@ ol {
     grid-template-columns: 1fr;
   }
 }
+/* =====================================================
+   SALE
+   ===================================================== */
+
+.chip-sale {
+    background: var(--error);
+    color: var(--on-error);
+    font-weight: 700;
+}
+
+
+.sale-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+
+.old-price {
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--outline);
+    text-decoration: line-through;
+}
+
+
+.new-price {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    color: var(--error);
+}
+
+
+.product-card-image .chip-sale {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    left: auto;
+    z-index: 3;
+}
+
+
+.sale-nav-link {
+    color: var(--error);
+    font-weight: 700;
+}
+
+
+.sale-nav-link:hover {
+    color: var(--error);
+}
+/* =====================================================
+   HOME SALE BANNER
+   ===================================================== */
+
+.sale-banner-home {
+    margin-top: 32px;
+    padding: 16px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+    flex-wrap: wrap;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    border: 1px solid var(--surface-variant);
+
+    border-radius: var(--radius);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.sale-banner-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+
+.sale-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--primary);
+
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    transition: opacity 0.2s ease;
+}
+
+
+.sale-banner-link:hover {
+    opacity: 0.65;
+}
+
+
+.sale-banner-link .material-symbols-outlined {
+    font-size: 17px;
+}
+/* =====================================================
+   SALE SYSTEM
+   ===================================================== */
+
+.chip-sale {
+    background: var(--error);
+    color: var(--on-error);
+    font-weight: 700;
+}
+
+
+.sale-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+
+.old-price {
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--outline);
+    text-decoration: line-through;
+}
+
+
+.new-price {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    color: var(--error);
+}
+
+
+.product-card-image .chip-sale {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    left: auto;
+    z-index: 3;
+}
+
+
+.sale-nav-link {
+    color: var(--error);
+    font-weight: 700;
+}
+
+
+.sale-nav-link:hover {
+    color: var(--error);
+}
+
+
+/* =====================================================
+   SALE PRICE ON PRODUCT PAGE
+   ===================================================== */
+
+.product-old-price {
+    display: inline-block;
+    margin-right: 10px;
+    color: var(--outline);
+    font-size: 15px;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+
+.product-sale-price {
+    display: inline-block;
+    color: var(--error);
+    font-weight: 700;
+}
+/* =====================================================
+   HOME SALE BANNER
+   ===================================================== */
+
+.sale-banner-home {
+    margin-top: 32px;
+    padding: 16px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+    flex-wrap: wrap;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    border: 1px solid var(--surface-variant);
+
+    border-radius: var(--radius);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.sale-banner-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+
+.sale-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--primary);
+
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    transition: opacity 0.2s ease;
+}
+
+
+.sale-banner-link:hover {
+    opacity: 0.65;
+}
+
+
+.sale-banner-link .material-symbols-outlined {
+    font-size: 17px;
+}

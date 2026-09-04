@@ -4,202 +4,437 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Your Cart — LUXE</title>
-  <meta name="description" content="Review your selected minimalist luxury items before checkout." />
+
+  <meta
+    name="description"
+    content="Review your selected minimalist luxury items before checkout."
+  />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  />
+
   <link href="css/styles.css" rel="stylesheet" />
 </head>
 
+
 <body>
 
-  <!-- ======= HEADER ======= -->
+  <!-- =====================================
+       HEADER
+  ====================================== -->
+
   <header class="site-header" id="site-header">
+
     <div class="container header-inner">
-      <a class="logo" href="index.html">LUXE</a>
-      <nav class="nav-links" id="nav-links">
-        <a class="nav-link" href="shop.html">Shop All</a>
-        <a class="nav-link" href="shop.html?category=new-arrivals">New Arrivals</a>
-        <a class="nav-link" href="shop.html?category=textiles">Textiles</a>
-        <a class="nav-link" href="shop.html?category=lighting">Lighting</a>
-        <a class="nav-link" href="shop.html?category=dining">Dining</a>
+
+      <a
+        class="logo"
+        href="index.html"
+      >
+        LUXE
+      </a>
+
+
+      <nav
+        class="nav-links"
+        id="nav-links"
+      >
+
+        <a
+          class="nav-link"
+          href="shop.html"
+        >
+          Shop All
+        </a>
+
+        <a
+          class="nav-link"
+          href="shop.html?category=new-arrivals"
+        >
+          New Arrivals
+        </a>
+
+        <a
+          class="nav-link"
+          href="shop.html?category=textiles"
+        >
+          Textiles
+        </a>
+
+        <a
+          class="nav-link"
+          href="shop.html?category=lighting"
+        >
+          Lighting
+        </a>
+
+        <a
+          class="nav-link"
+          href="shop.html?category=dining"
+        >
+          Dining
+        </a>
+
       </nav>
+
+
       <div class="header-icons">
-        <button class="icon-btn" aria-label="Account">
-          <span class="material-symbols-outlined">person</span>
+
+        <button
+          class="icon-btn"
+          aria-label="Account"
+          onclick="location.href='account.html'"
+        >
+          <span class="material-symbols-outlined">
+            person
+          </span>
         </button>
-        <button class="icon-btn" aria-label="Wishlist">
-          <span class="material-symbols-outlined">favorite</span>
+
+
+        <button
+          class="icon-btn"
+          aria-label="Wishlist"
+        >
+          <span class="material-symbols-outlined">
+            favorite
+          </span>
         </button>
-        <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
-          <span class="material-symbols-outlined">shopping_bag</span>
-          <span class="cart-badge" id="cart-badge">2</span>
+
+
+        <button
+          class="icon-btn"
+          aria-label="Cart"
+          onclick="location.href='cart.html'"
+        >
+
+          <span class="material-symbols-outlined">
+            shopping_bag
+          </span>
+
+
+          <span
+            class="cart-badge"
+            id="cart-badge"
+          >
+            0
+          </span>
+
         </button>
-        <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="menu-toggle">
-          <span class="material-symbols-outlined">menu</span>
+
+
+        <button
+          class="icon-btn mobile-menu-btn"
+          aria-label="Menu"
+          id="menu-toggle"
+        >
+
+          <span class="material-symbols-outlined">
+            menu
+          </span>
+
         </button>
+
       </div>
+
     </div>
+
   </header>
 
-  <!-- ======= MAIN ======= -->
-  <main class="cart-page" style="flex-grow:1;">
+
+  <!-- =====================================
+       MAIN
+  ====================================== -->
+
+  <main
+    class="cart-page"
+    style="flex-grow:1;"
+  >
+
     <div class="container">
 
       <div class="cart-header">
-        <h1 class="headline-lg" style="color:var(--primary);">Your Cart</h1>
-        <p class="body-md">Not ready to checkout? <a href="shop.html">Continue Shopping</a></p>
+
+        <h1
+          class="headline-lg"
+          style="color:var(--primary);"
+        >
+          Your Cart
+        </h1>
+
+
+        <p class="body-md">
+
+          Not ready to checkout?
+
+          <a href="shop.html">
+            Continue Shopping
+          </a>
+
+        </p>
+
       </div>
 
+
       <div class="cart-layout">
-        <!-- Cart Items -->
+
+
+        <!-- CART ITEMS -->
+
         <div class="cart-items">
-
-          <!-- Item 1 -->
-          <div class="cart-item">
-            <div class="cart-item-image">
-              <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi9gpbliSXzq-X-q--qh65TdKzq4Cm_cHjPWS6jngkLD7VMW0qa58QUlqreUXHGfXDqAD4JXVYIqS36Wz6jUZKp9RhYNlpFmKFSDqRxSiiWaVSuEpyDJRG2YeHnHASrr0PB4HGd1PQ0EZf_2fweaSDOQURb_Q6mKjELbyTu2F2Y5942YTFK60yo1Cfxw0eoC8aMLTLaIA1LjZVBSeDl1wfprUYEyJZgF9y0iyRN5mclsPpazMkyu4_WQ"
-                alt="Obsidian Ceramic Vase" />
-            </div>
-            <div class="cart-item-details">
-              <div>
-                <div class="cart-item-top">
-                  <div>
-                    <h3 class="cart-item-name">Obsidian Ceramic Vase</h3>
-                    <p class="cart-item-variant">Variant: Matte Black</p>
-                    <span class="chip chip-champagne">In Stock</span>
-                  </div>
-                  <div class="cart-item-price">$145.00</div>
-                </div>
-              </div>
-
-              <div class="cart-item-bottom">
-                <div class="qty-selector">
-                  <button aria-label="Decrease quantity">
-                    <span class="material-symbols-outlined">remove</span>
-                  </button>
-                  <input type="text" class="qty-value" value="1" aria-label="Quantity" />
-                  <button aria-label="Increase quantity">
-                    <span class="material-symbols-outlined">add</span>
-                  </button>
-                </div>
-                <button class="remove-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                  <span>Remove</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 2 -->
-          <div class="cart-item">
-            <div class="cart-item-image">
-              <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgJkNYr7XOh7e4KBwf3UbBWj5RD4jyeFovCfPq0wUZdjUaxRwPDTSrLerTQdchL7IusHydsrD4trZ2Z9-AWMemAadkMsotJPWf8vxLShMjDDS74h1wCt_qfSTRVREVrtIEHTxbLAOC6egFWEHI_hm40Fi-osvUTcDPLUNEhog5kf4NUWDBePFkKG-XmkyAxdhdrRwwodhBypTs5WHaYpfi3TiBFVPGKqcbzy_e5On-a5jWn19X3aDRpw"
-                alt="Tailored Linen Throw" />
-            </div>
-            <div class="cart-item-details">
-              <div>
-                <div class="cart-item-top">
-                  <div>
-                    <h3 class="cart-item-name">Tailored Linen Throw</h3>
-                    <p class="cart-item-variant">Variant: Soft Beige</p>
-                    <span class="chip chip-champagne">Low Stock</span>
-                  </div>
-                  <div class="cart-item-price">$210.00</div>
-                </div>
-              </div>
-
-              <div class="cart-item-bottom">
-                <div class="qty-selector">
-                  <button aria-label="Decrease quantity">
-                    <span class="material-symbols-outlined">remove</span>
-                  </button>
-                  <input type="text" class="qty-value" value="1" aria-label="Quantity" />
-                  <button aria-label="Increase quantity">
-                    <span class="material-symbols-outlined">add</span>
-                  </button>
-                </div>
-                <button class="remove-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                  <span>Remove</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
+          <!-- cart.js renders products here -->
         </div>
 
-        <!-- Order Summary -->
+
+        <!-- ORDER SUMMARY -->
+
         <aside class="order-summary">
-          <h2 class="headline-md" style="color:var(--primary);">Order Summary</h2>
+
+          <h2
+            class="headline-md"
+            style="color:var(--primary);"
+          >
+            Order Summary
+          </h2>
+
 
           <div class="summary-lines">
+
+
+            <!-- SUBTOTAL -->
+
             <div class="summary-line">
-              <span>Subtotal</span>
-              <span>$355.00</span>
+
+              <span>
+                Subtotal
+              </span>
+
+              <span>
+                $0.00
+              </span>
+
             </div>
+
+
+            <!-- SHIPPING -->
+
             <div class="summary-line">
-              <span>Shipping</span>
-              <span>Calculated at checkout</span>
+
+              <span>
+                Shipping
+              </span>
+
+              <span>
+                Calculated at checkout
+              </span>
+
             </div>
+
+
+            <!-- TAX -->
+
             <div class="summary-line">
-              <span>Tax</span>
-              <span>$28.40</span>
+
+              <span>
+                Tax
+              </span>
+
+              <span>
+                $0.00
+              </span>
+
             </div>
+
           </div>
+
+
+          <!-- TOTAL -->
 
           <div class="summary-total">
-            <span class="total-label">Total</span>
-            <span class="total-amount">$383.40</span>
+
+            <span class="total-label">
+              Total
+            </span>
+
+            <span class="total-amount">
+              $0.00
+            </span>
+
           </div>
+
+
+          <!-- PROMO -->
 
           <div class="promo-section">
-            <label class="promo-label" for="promo">Promo Code</label>
+
+            <label
+              class="promo-label"
+              for="promo"
+            >
+              Promo Code
+            </label>
+
+
             <div class="promo-row">
-              <input type="text" class="input-field" id="promo" placeholder="Enter code" />
-              <button class="btn btn-secondary">Apply</button>
+
+              <input
+                type="text"
+                class="input-field"
+                id="promo"
+                placeholder="Enter code"
+                autocomplete="off"
+              />
+
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="apply-promo"
+              >
+                Apply
+              </button>
+
             </div>
+
           </div>
 
-          <button class="btn btn-primary checkout-btn" onclick="location.href='checkout.html'">
+
+          <!-- CHECKOUT -->
+
+          <button
+            type="button"
+            class="btn btn-primary checkout-btn"
+            onclick="location.href='checkout.html'"
+          >
+
             Proceed to Checkout
-            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+
+            <span
+              class="material-symbols-outlined"
+              style="font-size:18px;"
+            >
+              arrow_forward
+            </span>
+
           </button>
+
         </aside>
 
       </div>
 
     </div>
+
   </main>
 
-  <!-- ======= FOOTER ======= -->
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
   <footer class="site-footer">
+
     <div class="container footer-inner">
+
       <div class="footer-brand">
-        <span class="logo" style="font-size:32px; line-height:40px;">LUXE</span>
-        <p class="footer-copyright" style="margin-top:32px;">© 2024 LUXE Professional. All rights reserved.</p>
+
+        <span
+          class="logo"
+          style="
+            font-size:32px;
+            line-height:40px;
+          "
+        >
+          LUXE
+        </span>
+
+
+        <p
+          class="footer-copyright"
+          style="margin-top:32px;"
+        >
+          © 2024 LUXE Professional.
+          All rights reserved.
+        </p>
+
       </div>
+
+
       <div>
-        <div class="footer-links" style="margin-top:0;">
-          <a class="footer-link label-sm" href="#">About Us</a>
-          <a class="footer-link label-sm" href="#">Sustainability</a>
+
+        <div
+          class="footer-links"
+          style="margin-top:0;"
+        >
+
+          <a
+            class="footer-link label-sm"
+            href="#"
+          >
+            About Us
+          </a>
+
+          <a
+            class="footer-link label-sm"
+            href="#"
+          >
+            Sustainability
+          </a>
+
         </div>
+
       </div>
+
+
       <div>
-        <div class="footer-links" style="margin-top:0;">
-          <a class="footer-link label-sm" href="#">Shipping &amp; Returns</a>
-          <a class="footer-link label-sm" href="#">Contact Support</a>
-          <a class="footer-link label-sm" href="#">Privacy Policy</a>
+
+        <div
+          class="footer-links"
+          style="margin-top:0;"
+        >
+
+          <a
+            class="footer-link label-sm"
+            href="#"
+          >
+            Shipping &amp; Returns
+          </a>
+
+          <a
+            class="footer-link label-sm"
+            href="#"
+          >
+            Contact Support
+          </a>
+
+          <a
+            class="footer-link label-sm"
+            href="#"
+          >
+            Privacy Policy
+          </a>
+
         </div>
+
       </div>
+
     </div>
+
   </footer>
 
+
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
   <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+
 </body>
 
 </html>
