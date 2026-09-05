@@ -8,18 +8,13 @@
 
     <title>Sale — LUXE</title>
 
-    <meta
-        name="description"
-        content="Selected LUXE pieces at special prices."
-    >
+    <meta name="description" content="Selected LUXE pieces at special prices.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
 
     <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -42,38 +37,23 @@
                     Shop All
                 </a>
 
-                <a
-                    class="nav-link"
-                    href="shop.html?category=new-arrivals"
-                >
+                <a class="nav-link" href="shop.html?category=new-arrivals">
                     New Arrivals
                 </a>
 
-                <a
-                    class="nav-link"
-                    href="shop.html?category=textiles"
-                >
+                <a class="nav-link" href="shop.html?category=textiles">
                     Textiles
                 </a>
 
-                <a
-                    class="nav-link"
-                    href="shop.html?category=lighting"
-                >
+                <a class="nav-link" href="shop.html?category=lighting">
                     Lighting
                 </a>
 
-                <a
-                    class="nav-link"
-                    href="shop.html?category=dining"
-                >
+                <a class="nav-link" href="shop.html?category=dining">
                     Dining
                 </a>
 
-                <a
-                    class="nav-link active"
-                    href="sale.html"
-                >
+                <a class="nav-link active" href="sale.html">
                     Sale
                 </a>
 
@@ -81,60 +61,35 @@
 
             <div class="header-icons">
 
-                <button
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Search"
-                >
+                <button class="icon-btn" type="button" aria-label="Search">
                     <span class="material-symbols-outlined">
                         search
                     </span>
                 </button>
 
-                <button
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Account"
-                >
+                <button class="icon-btn" type="button" aria-label="Account" onclick="location.href='account.html'">
                     <span class="material-symbols-outlined">
                         person
                     </span>
                 </button>
 
-                <button
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Wishlist"
-                >
+                <button class="icon-btn" type="button" aria-label="Wishlist">
                     <span class="material-symbols-outlined">
                         favorite
                     </span>
                 </button>
 
-                <button
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Cart"
-                    onclick="location.href='cart.html'"
-                >
+                <button class="icon-btn" type="button" aria-label="Cart" onclick="location.href='cart.html'">
                     <span class="material-symbols-outlined">
                         shopping_bag
                     </span>
 
-                    <span
-                        class="cart-badge"
-                        id="cart-badge"
-                    >
+                    <span class="cart-badge" id="cart-badge">
                         0
                     </span>
                 </button>
 
-                <button
-                    class="icon-btn mobile-menu-btn"
-                    type="button"
-                    aria-label="Menu"
-                    id="menu-toggle"
-                >
+                <button class="icon-btn mobile-menu-btn" type="button" aria-label="Menu" id="menu-toggle">
                     <span class="material-symbols-outlined">
                         menu
                     </span>
@@ -151,20 +106,14 @@
 
     <main style="flex-grow: 1;">
 
-        <div
-            class="container"
-            style="
+        <div class="container" style="
                 padding-top: 40px;
                 padding-bottom: 80px;
-            "
-        >
+            ">
 
             <!-- BREADCRUMBS -->
 
-            <nav
-                class="breadcrumbs"
-                aria-label="Breadcrumb"
-            >
+            <nav class="breadcrumbs" aria-label="Breadcrumb">
 
                 <a href="index.html">
                     Home
@@ -197,23 +146,16 @@
 
                     <div>
 
-                        <h1
-                            class="headline-lg"
-                            style="
+                        <h1 class="headline-lg" style="
                                 color: var(--primary);
                                 margin-bottom: 8px;
-                            "
-                        >
+                            ">
                             Sale
                         </h1>
 
-                        <p
-                            class="body-md"
-                            id="sale-count"
-                            style="
+                        <p class="body-md" id="sale-count" style="
                                 color: var(--on-surface-variant);
-                            "
-                        >
+                            ">
                             Selected pieces at special prices
                         </p>
 
@@ -231,17 +173,11 @@
 
                 <!-- SIDEBAR -->
 
-                <aside
-                    class="shop-sidebar"
-                    id="shop-sidebar"
-                >
+                <aside class="shop-sidebar" id="shop-sidebar">
 
                     <div class="filter-group">
 
-                        <div
-                            class="filter-title"
-                            id="sale-filter-toggle"
-                        >
+                        <div class="filter-title" id="sale-filter-toggle">
                             Discount
 
                             <span class="material-symbols-outlined">
@@ -250,18 +186,11 @@
                         </div>
 
 
-                        <div
-                            class="filter-options"
-                            id="sale-filter-options"
-                        >
+                        <div class="filter-options" id="sale-filter-options">
 
                             <label class="checkbox-label">
 
-                                <input
-                                    type="checkbox"
-                                    class="sale-discount-filter"
-                                    value="10"
-                                >
+                                <input type="checkbox" class="sale-discount-filter" value="10">
 
                                 <span>
                                     10% off
@@ -272,11 +201,7 @@
 
                             <label class="checkbox-label">
 
-                                <input
-                                    type="checkbox"
-                                    class="sale-discount-filter"
-                                    value="15"
-                                >
+                                <input type="checkbox" class="sale-discount-filter" value="15">
 
                                 <span>
                                     15% off
@@ -287,11 +212,7 @@
 
                             <label class="checkbox-label">
 
-                                <input
-                                    type="checkbox"
-                                    class="sale-discount-filter"
-                                    value="20"
-                                >
+                                <input type="checkbox" class="sale-discount-filter" value="20">
 
                                 <span>
                                     20% off
@@ -302,11 +223,7 @@
 
                             <label class="checkbox-label">
 
-                                <input
-                                    type="checkbox"
-                                    class="sale-discount-filter"
-                                    value="25"
-                                >
+                                <input type="checkbox" class="sale-discount-filter" value="25">
 
                                 <span>
                                     25% off
@@ -325,10 +242,7 @@
 
                 <div class="shop-content">
 
-                    <div
-                        class="product-grid"
-                        id="sale-product-grid"
-                    >
+                    <div class="product-grid" id="sale-product-grid">
                     </div>
 
                 </div>
@@ -348,13 +262,10 @@
 
             <div class="footer-brand">
 
-                <span
-                    class="logo"
-                    style="
+                <span class="logo" style="
                         font-size: 32px;
                         line-height: 40px;
-                    "
-                >
+                    ">
                     LUXE
                 </span>
 
@@ -372,22 +283,13 @@
 
             <div>
 
-                <div
-                    class="footer-links"
-                    style="margin-top: 0;"
-                >
+                <div class="footer-links" style="margin-top: 0;">
 
-                    <a
-                        class="footer-link label-sm"
-                        href="#"
-                    >
+                    <a class="footer-link label-sm" href="#">
                         About Us
                     </a>
 
-                    <a
-                        class="footer-link label-sm"
-                        href="#"
-                    >
+                    <a class="footer-link label-sm" href="#">
                         Sustainability
                     </a>
 
@@ -398,22 +300,13 @@
 
             <div>
 
-                <div
-                    class="footer-links"
-                    style="margin-top: 0;"
-                >
+                <div class="footer-links" style="margin-top: 0;">
 
-                    <a
-                        class="footer-link label-sm"
-                        href="#"
-                    >
+                    <a class="footer-link label-sm" href="#">
                         Shipping &amp; Returns
                     </a>
 
-                    <a
-                        class="footer-link label-sm"
-                        href="#"
-                    >
+                    <a class="footer-link label-sm" href="#">
                         Contact Support
                     </a>
 

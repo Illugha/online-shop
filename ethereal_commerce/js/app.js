@@ -670,8 +670,8 @@ function getProductPriceMarkup(product) {
 
             <span class="new-price">
                 ${formatMoney(
-                    getSalePrice(product)
-                )}
+        getSalePrice(product)
+    )}
             </span>
 
         </div>
@@ -784,13 +784,13 @@ function addToCart(
         cart.find(
             item =>
                 String(item.id) ===
-                    String(product.id) &&
+                String(product.id) &&
                 String(
                     item.variant
                 ) ===
-                    String(
-                        selectedVariant
-                    )
+                String(
+                    selectedVariant
+                )
         );
 
 
@@ -994,6 +994,119 @@ window.products =
 document.addEventListener(
     'DOMContentLoaded',
     () => {
+        // =====================================================
+        // IMAGE ZOOM LENS INITIALIZATION
+        // =====================================================
+        function initImageZoom() {
+            const img = document.getElementById('main-product-img');
+            const lens = document.getElementById('zoom-lens');
+            const result = document.getElementById('zoom-result');
+            const container = document.getElementById('main-image');
+
+            if (!img || !lens || !result || !container) return;
+
+            // Размер линзы
+            const LENS_SIZE = 140;
+            lens.style.width = LENS_SIZE + 'px';
+            lens.style.height = LENS_SIZE + 'px';
+
+            // Функция вычисляет точный размер и отступы фото внутри контейнера (из-за object-fit)
+            function getRenderedImageDetails() {
+                if (!img.naturalWidth || !img.naturalHeight) {
+                    return {
+                        width: img.offsetWidth,
+                        height: img.offsetHeight,
+                        left: 0,
+                        top: 0
+                    };
+                }
+
+                const naturalRatio = img.naturalWidth / img.naturalHeight;
+                const containerWidth = img.offsetWidth;
+                const containerHeight = img.offsetHeight;
+                const containerRatio = containerWidth / containerHeight;
+
+                let renderWidth = containerWidth;
+                let renderHeight = containerHeight;
+                let offsetX = 0;
+                let offsetY = 0;
+
+                if (containerRatio > naturalRatio) {
+                    renderWidth = containerHeight * naturalRatio;
+                    offsetX = (containerWidth - renderWidth) / 2;
+                } else {
+                    renderHeight = containerWidth / naturalRatio;
+                    offsetY = (containerHeight - renderHeight) / 2;
+                }
+
+                return {
+                    width: renderWidth,
+                    height: renderHeight,
+                    left: offsetX,
+                    top: offsetY
+                };
+            }
+
+            function updateZoomBackground() {
+                result.style.backgroundImage = `url("${img.src}")`;
+            }
+
+            function moveLens(e) {
+                e.preventDefault();
+                const rect = img.getBoundingClientRect();
+                const rendered = getRenderedImageDetails();
+
+                // Положение мыши относительно контейнера
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                // Центрируем линзу на курсоре
+                let x = mouseX - (LENS_SIZE / 2);
+                let y = mouseY - (LENS_SIZE / 2);
+
+                // Ограничиваем движение линзы СТРОГО видимой частью картинки
+                const minX = rendered.left;
+                const maxX = rendered.left + rendered.width - LENS_SIZE;
+                const minY = rendered.top;
+                const maxY = rendered.top + rendered.height - LENS_SIZE;
+
+                if (x < minX) x = minX;
+                if (x > maxX) x = maxX;
+                if (y < minY) y = minY;
+                if (y > maxY) y = maxY;
+
+                lens.style.left = x + 'px';
+                lens.style.top = y + 'px';
+
+                // Коэффициент масштаба
+                const cx = result.offsetWidth / LENS_SIZE;
+                const cy = result.offsetHeight / LENS_SIZE;
+
+                // Размер фона и смещение (с учетом отступов rendered.left и rendered.top)
+                result.style.backgroundSize = `${rendered.width * cx}px ${rendered.height * cy}px`;
+
+                const bgX = (x - rendered.left) * cx;
+                const bgY = (y - rendered.top) * cy;
+
+                result.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+            }
+
+            container.addEventListener('mouseenter', () => {
+                if (window.innerWidth <= 1024) return;
+                updateZoomBackground();
+                lens.style.display = 'block';
+                result.style.display = 'block';
+            });
+
+            container.addEventListener('mouseleave', () => {
+                lens.style.display = 'none';
+                result.style.display = 'none';
+            });
+
+            container.addEventListener('mousemove', moveLens);
+        }
+
+        initImageZoom();
 
         updateCartBadge();
 
@@ -1088,8 +1201,8 @@ document.addEventListener(
                                 class="product-sale-price"
                             >
                                 ${formatMoney(
-                                    getSalePrice(product)
-                                )}
+                            getSalePrice(product)
+                        )}
                             </span>
 
                         `;
@@ -1254,10 +1367,9 @@ document.addEventListener(
 
 
                             thumbnail.className =
-                                `thumb ${
-                                    index === 0
-                                        ? 'active'
-                                        : ''
+                                `thumb ${index === 0
+                                    ? 'active'
+                                    : ''
                                 }`;
 
 
@@ -1313,10 +1425,9 @@ document.addEventListener(
 
 
                             button.className =
-                                `color-swatch ${
-                                    index === 0
-                                        ? 'active'
-                                        : ''
+                                `color-swatch ${index === 0
+                                    ? 'active'
+                                    : ''
                                 }`;
 
 
@@ -1488,17 +1599,16 @@ document.addEventListener(
                                 <p
                                     class="related-card-price"
                                 >
-                                    ${
-                                        isProductOnSale(
+                                    ${isProductOnSale(
+                                item
+                            )
+                                    ? formatMoney(
+                                        getSalePrice(
                                             item
                                         )
-                                            ? formatMoney(
-                                                getSalePrice(
-                                                    item
-                                                )
-                                            )
-                                            : item.price
-                                    }
+                                    )
+                                    : item.price
+                                }
                                 </p>
                             `;
 
@@ -1574,7 +1684,7 @@ document.addEventListener(
 
             const category =
                 curatedCategories[
-                    categoryKey
+                categoryKey
                 ];
 
 
@@ -1684,7 +1794,7 @@ document.addEventListener(
 
                     const category =
                         curatedCategories[
-                            card.dataset.category
+                        card.dataset.category
                         ];
 
 
@@ -2415,7 +2525,7 @@ document.addEventListener(
                     'shop.html'
                 ) ||
             window.location.pathname ===
-                '/shop.html';
+            '/shop.html';
 
 
         if (isShopPage) {
@@ -2424,6 +2534,13 @@ document.addEventListener(
                 new URLSearchParams(
                     window.location.search
                 );
+
+
+            const savedPage = parseInt(
+                shopUrlParams.get('page') || sessionStorage.getItem('luxe_shop_page'),
+                10
+            );
+            const initialPage = Number.isNaN(savedPage) || savedPage < 1 ? 1 : savedPage;
 
 
             const category =
@@ -2448,7 +2565,7 @@ document.addEventListener(
 
             const categoryView =
                 categoryMap[
-                    category
+                category
                 ];
 
 
@@ -2672,9 +2789,9 @@ document.addEventListener(
                         const isCurrent =
                             categoryView
                                 ? href ===
-                                    `shop.html?category=${category}`
+                                `shop.html?category=${category}`
                                 : href ===
-                                    'shop.html';
+                                'shop.html';
 
 
                         link.classList.toggle(
@@ -2750,10 +2867,9 @@ document.addEventListener(
 
 
                 itemCount.textContent =
-                    `Showing ${count} ${
-                        count === 1
-                            ? 'item'
-                            : 'items'
+                    `Showing ${count} ${count === 1
+                        ? 'item'
+                        : 'items'
                     }`;
             }
 
@@ -2810,11 +2926,22 @@ document.addEventListener(
                             pageCount
                         );
 
+                    // ==========================================
+                    // СОХРАНЯЕМ СТРАНИЦУ В ПАМЯТЬ И В АДРЕСНУЮ СТРОКУ
+                    // ==========================================
+                    sessionStorage.setItem('luxe_shop_page', currentPage);
 
-                    const firstItem =
-                        (currentPage - 1) *
-                        itemsPerPage;
+                    const currentUrl = new URL(window.location.href);
+                    if (currentPage > 1) {
+                        currentUrl.searchParams.set('page', currentPage);
+                    } else {
+                        currentUrl.searchParams.delete('page');
+                    }
+                    // Меняем URL без перезагрузки страницы
+                    window.history.replaceState({ page: currentPage }, '', currentUrl);
+                    // ==========================================
 
+                    const firstItem = (currentPage - 1) * itemsPerPage;
 
                     const cardsOnPage =
                         productsForView.slice(
@@ -2893,10 +3020,9 @@ document.addEventListener(
 
 
                     button.className =
-                        `page-btn ${
-                            page === currentPage
-                                ? 'active'
-                                : ''
+                        `page-btn ${page === currentPage
+                            ? 'active'
+                            : ''
                         }`;
 
 
@@ -2970,9 +3096,9 @@ document.addEventListener(
                     button.disabled =
                         isPrevious
                             ? currentPage ===
-                                1
+                            1
                             : currentPage ===
-                                pageCount;
+                            pageCount;
 
 
                     button.setAttribute(
@@ -2987,11 +3113,10 @@ document.addEventListener(
                         <span
                             class="material-symbols-outlined"
                         >
-                            ${
-                                isPrevious
-                                    ? 'chevron_left'
-                                    : 'chevron_right'
-                            }
+                            ${isPrevious
+                            ? 'chevron_left'
+                            : 'chevron_right'
+                        }
                         </span>
                     `;
 
@@ -3076,7 +3201,15 @@ document.addEventListener(
             }
 
 
-            showPage(1);
+            // Открываем сохраненную страницу вместо жесткой единицы
+            showPage(initialPage);
+
+            // Слушаем стрелки браузера «Назад» и «Вперед»
+            window.addEventListener('popstate', () => {
+                const params = new URLSearchParams(window.location.search);
+                const pageFromUrl = parseInt(params.get('page'), 10) || 1;
+                showPage(pageFromUrl);
+            });
         }
 
 

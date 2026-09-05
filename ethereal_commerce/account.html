@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account — LUXE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a class="logo" href="index.html">LUXE</a>
+            <nav class="nav-links">
+                <a class="nav-link" href="shop.html">Shop All</a>
+            </nav>
+            <div class="header-icons">
+                <button class="icon-btn" aria-label="Account" onclick="location.href='account.html'">
+                    <span class="material-symbols-outlined">person</span>
+                </button>
+                <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main style="flex-grow:1; padding: 60px 0;">
+        <div class="container" style="max-width: 640px;">
+
+            <!-- VIEW 1: AUTH (REGISTER / LOGIN) -->
+            <div id="auth-container">
+                <!-- Auth Tabs -->
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab-btn active" id="tab-register-btn">Register</button>
+                    <button type="button" class="auth-tab-btn" id="tab-login-btn">Sign In</button>
+                </div>
+
+                <!-- REGISTRATION FORM -->
+                <form id="register-form" class="auth-card">
+                    <h2 class="headline-md" style="margin-bottom: 8px;">Create an Account</h2>
+                    <p class="body-md" style="color: var(--on-surface-variant); margin-bottom: 24px;">Enter your details
+                        to streamline checkout.</p>
+
+                    <div class="form-field">
+                        <label for="reg-email">Email Address *</label>
+                        <input type="email" id="reg-email" class="input-field" placeholder="you@example.com" required />
+                    </div>
+
+                    <div class="form-field">
+                        <label for="reg-password">Password *</label>
+                        <input type="password" id="reg-password" class="input-field" placeholder="Create password"
+                            required />
+                    </div>
+
+                    <!-- ФИО -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="reg-last-name">Фамилия (Last Name) *</label>
+                            <input type="text" id="reg-last-name" class="input-field" required />
+                        </div>
+                        <div class="form-field">
+                            <label for="reg-first-name">Имя (First Name) *</label>
+                            <input type="text" id="reg-first-name" class="input-field" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="reg-middle-name">Отчество (Middle Name)</label>
+                            <input type="text" id="reg-middle-name" class="input-field" placeholder="Необязательно" />
+                        </div>
+                        <div class="form-field">
+                            <label for="reg-zip">Почтовый индекс (ZIP) *</label>
+                            <input type="text" id="reg-zip" class="input-field" placeholder="10001" required />
+                        </div>
+                    </div>
+
+                    <!-- КАРТА И ГАЛОЧКА "ДОБАВИТЬ ПОЗЖЕ" -->
+                    <div class="card-section-wrapper"
+                        style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--surface-variant);">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                            <span class="label-md" style="font-weight: 600;">Payment Card (Optional)</span>
+                            <label class="checkbox-label" style="font-size: 14px;">
+                                <input type="checkbox" id="reg-skip-card" />
+                                <span>Добавить позже</span>
+                            </label>
+                        </div>
+
+                        <div id="reg-card-inputs">
+                            <div class="form-field">
+                                <label for="reg-card-number">Card Number</label>
+                                <input type="text" id="reg-card-number" class="input-field"
+                                    placeholder="0000 0000 0000 0000" />
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="reg-card-exp">Expiry Date</label>
+                                    <input type="text" id="reg-card-exp" class="input-field" placeholder="MM/YY" />
+                                </div>
+                                <div class="form-field">
+                                    <label for="reg-card-cvv">CVV</label>
+                                    <input type="text" id="reg-card-cvv" class="input-field" placeholder="123" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full"
+                        style="margin-top: 24px; padding: 14px;">Register & Save</button>
+                </form>
+
+                <!-- LOGIN FORM -->
+                <form id="login-form" class="auth-card" style="display: none;">
+                    <h2 class="headline-md" style="margin-bottom: 8px;">Welcome Back</h2>
+                    <p class="body-md" style="color: var(--on-surface-variant); margin-bottom: 24px;">Sign in with your
+                        email and password.</p>
+
+                    <div class="form-field">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="input-field" required />
+                    </div>
+                    <div class="form-field">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="input-field" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full" style="margin-top: 24px; padding: 14px;">Sign
+                        In</button>
+                </form>
+            </div>
+
+            <!-- VIEW 2: PROFILE (WHEN LOGGED IN) -->
+            <div id="profile-container" class="auth-card" style="display: none;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                    <div>
+                        <h2 class="headline-md" id="profile-name">User Name</h2>
+                        <p class="body-md" id="profile-email" style="color: var(--on-surface-variant);"></p>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="logout-btn"
+                        style="padding: 6px 16px;">Logout</button>
+                </div>
+
+                <div
+                    style="margin-bottom: 24px; padding: 16px; background: var(--surface-container-low); border-radius: var(--radius-sm);">
+                    <p class="label-md"><strong>Почтовый индекс:</strong> <span id="profile-zip"></span></p>
+                    <p class="label-md" style="margin-top: 4px;"><strong>Отчество:</strong> <span
+                            id="profile-middle"></span></p>
+                </div>
+
+                <div style="border-top: 1px solid var(--surface-variant); padding-top: 20px;">
+                    <h3 class="label-md" style="font-size: 16px; margin-bottom: 12px;">Saved Card</h3>
+                    <div id="profile-card-status"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-full" style="margin-top: 32px;"
+                    onclick="location.href='shop.html'">Go to Shopping</button>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

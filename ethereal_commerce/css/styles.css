@@ -519,7 +519,7 @@ ol {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: var(--surface-container-lowest);
+  background: transparent;
   overflow: hidden;
   margin-bottom: 16px;
   border-radius: var(--radius-sm);
@@ -1363,7 +1363,7 @@ ol {
   flex: 1;
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--surface-container-low);
+  background: transparent;
   position: relative;
 }
 
@@ -1529,7 +1529,7 @@ ol {
 
 .related-card-image {
   aspect-ratio: 3 / 4;
-  background: var(--surface-container);
+  background: transparent;
   border-radius: var(--radius);
   overflow: hidden;
   margin-bottom: 16px;
@@ -1638,7 +1638,7 @@ ol {
 .cart-item-image {
   width: 192px;
   min-height: 192px;
-  background: var(--surface-container-low);
+  background: transparent;
   flex-shrink: 0;
 }
 
@@ -2188,170 +2188,173 @@ ol {
     grid-template-columns: 1fr;
   }
 }
+
 /* =====================================================
    SALE
    ===================================================== */
 
 .chip-sale {
-    background: var(--error);
-    color: var(--on-error);
-    font-weight: 700;
+  background: var(--error);
+  color: var(--on-error);
+  font-weight: 700;
 }
 
 
 .sale-price {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
 }
 
 
 .old-price {
-    font-size: 13px;
-    line-height: 18px;
-    color: var(--outline);
-    text-decoration: line-through;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--outline);
+  text-decoration: line-through;
 }
 
 
 .new-price {
-    font-size: 18px;
-    line-height: 28px;
-    font-weight: 700;
-    color: var(--error);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--error);
 }
 
 
 .product-card-image .chip-sale {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    left: auto;
-    z-index: 3;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  left: auto;
+  z-index: 3;
 }
 
 
 .sale-nav-link {
-    color: var(--error);
-    font-weight: 700;
+  color: var(--error);
+  font-weight: 700;
 }
 
 
 .sale-nav-link:hover {
-    color: var(--error);
+  color: var(--error);
 }
+
 /* =====================================================
    HOME SALE BANNER
    ===================================================== */
 
 .sale-banner-home {
-    margin-top: 32px;
-    padding: 16px 22px;
+  margin-top: 32px;
+  padding: 16px 22px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    gap: 14px;
-    flex-wrap: wrap;
+  gap: 14px;
+  flex-wrap: wrap;
 
-    background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.88);
 
-    border: 1px solid var(--surface-variant);
+  border: 1px solid var(--surface-variant);
 
-    border-radius: var(--radius);
+  border-radius: var(--radius);
 
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
-    box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm);
 }
 
 
 .sale-banner-text {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary);
 }
 
 
 .sale-banner-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 
-    font-size: 14px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 
-    color: var(--primary);
+  color: var(--primary);
 
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 
-    transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 
 .sale-banner-link:hover {
-    opacity: 0.65;
+  opacity: 0.65;
 }
 
 
 .sale-banner-link .material-symbols-outlined {
-    font-size: 17px;
+  font-size: 17px;
 }
+
 /* =====================================================
    SALE SYSTEM
    ===================================================== */
 
 .chip-sale {
-    background: var(--error);
-    color: var(--on-error);
-    font-weight: 700;
+  background: var(--error);
+  color: var(--on-error);
+  font-weight: 700;
 }
 
 
 .sale-price {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
 }
 
 
 .old-price {
-    font-size: 13px;
-    line-height: 18px;
-    color: var(--outline);
-    text-decoration: line-through;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--outline);
+  text-decoration: line-through;
 }
 
 
 .new-price {
-    font-size: 18px;
-    line-height: 28px;
-    font-weight: 700;
-    color: var(--error);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--error);
 }
 
 
 .product-card-image .chip-sale {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    left: auto;
-    z-index: 3;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  left: auto;
+  z-index: 3;
 }
 
 
 .sale-nav-link {
-    color: var(--error);
-    font-weight: 700;
+  color: var(--error);
+  font-weight: 700;
 }
 
 
 .sale-nav-link:hover {
-    color: var(--error);
+  color: var(--error);
 }
 
 
@@ -2360,76 +2363,193 @@ ol {
    ===================================================== */
 
 .product-old-price {
-    display: inline-block;
-    margin-right: 10px;
-    color: var(--outline);
-    font-size: 15px;
-    text-decoration: line-through;
-    font-weight: 400;
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--outline);
+  font-size: 15px;
+  text-decoration: line-through;
+  font-weight: 400;
 }
 
 
 .product-sale-price {
-    display: inline-block;
-    color: var(--error);
-    font-weight: 700;
+  display: inline-block;
+  color: var(--error);
+  font-weight: 700;
 }
+
 /* =====================================================
    HOME SALE BANNER
    ===================================================== */
 
 .sale-banner-home {
-    margin-top: 32px;
-    padding: 16px 22px;
+  margin-top: 32px;
+  padding: 16px 22px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    gap: 14px;
-    flex-wrap: wrap;
+  gap: 14px;
+  flex-wrap: wrap;
 
-    background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.88);
 
-    border: 1px solid var(--surface-variant);
+  border: 1px solid var(--surface-variant);
 
-    border-radius: var(--radius);
+  border-radius: var(--radius);
 
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
-    box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm);
 }
 
 
 .sale-banner-text {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary);
 }
 
 
 .sale-banner-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 
-    font-size: 14px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 
-    color: var(--primary);
+  color: var(--primary);
 
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 
-    transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 
 .sale-banner-link:hover {
-    opacity: 0.65;
+  opacity: 0.65;
 }
 
 
 .sale-banner-link .material-symbols-outlined {
-    font-size: 17px;
+  font-size: 17px;
+}
+
+/* =====================================================
+   IMAGE ZOOM LENS
+   ===================================================== */
+
+/* Отключаем простое масштабирование при наведении */
+.main-image:hover img {
+  transform: none !important;
+}
+
+/* Разрешаем элементам выходить за границы фото */
+.main-image {
+  position: relative;
+  overflow: visible !important;
+}
+
+#main-product-img {
+  border-radius: var(--radius);
+  display: block;
+  width: 100%;
+}
+
+/* Квадратик-линза на оригинале */
+.zoom-lens {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(1px);
+  cursor: crosshair;
+  display: none;
+  pointer-events: none;
+  /* чтобы события мыши не застревали на квадратике */
+  z-index: 10;
+}
+
+/* Окно с увеличенной картинкой (всплывает справа от фото) */
+.zoom-result {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 37px);
+  /* отступ 24px справа от фото */
+  width: 480px;
+  height: 480px;
+  border: 1px solid var(--surface-variant);
+  border-radius: var(--radius);
+  background-color: var(--surface-container-lowest);
+  background-repeat: no-repeat;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* На планшетах и смартфонах лупу отключаем */
+@media (max-width: 1024px) {
+
+  .zoom-lens,
+  .zoom-result {
+    display: none !important;
+  }
+}
+
+.main-image:hover img,
+.main-image img {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* =====================================================
+   AUTH & SAVED CARD STYLES
+   ===================================================== */
+.auth-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 2px solid var(--surface-variant);
+  color: var(--on-surface-variant);
+  transition: all 0.2s;
+}
+
+.auth-tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.auth-card {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--surface-variant);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.saved-card-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: var(--surface-container-lowest);
+}
+
+.saved-card-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
