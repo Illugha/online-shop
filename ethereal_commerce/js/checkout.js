@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeModalButton) {
         closeModalButton.addEventListener('click', () => {
             localStorage.removeItem(CART_KEY);
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         });
     }
 
