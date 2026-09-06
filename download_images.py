@@ -54,25 +54,3 @@ products = [
     ("woven-placemat-set", "placemat,dining"),
     ("stoneware-mug-set", "mug,dining")
 ]
-
-os.makedirs('ethereal_commerce/img/products', exist_ok=True)
-
-for product_id, keywords in products:
-    for i in range(1, 5):
-        filename = f'ethereal_commerce/img/products/{product_id}_{i}.jpg'
-        if os.path.exists(filename):
-            continue
-        
-        lock_id = abs(hash(f"{product_id}_{i}")) % 10000 + 1
-        url = f'https://loremflickr.com/800/800/{keywords}/all?lock={lock_id}'
-        
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        try:
-            with urllib.request.urlopen(req) as response:
-                with open(filename, 'wb') as out_file:
-                    out_file.write(response.read())
-            print(f"Downloaded {filename}")
-        except Exception as e:
-            print(f"Failed to download {filename}: {e}")
-        
-        time.sleep(0.1)

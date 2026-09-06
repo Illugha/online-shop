@@ -25,6 +25,10 @@
                 <button class="icon-btn" aria-label="Account" onclick="location.href='account.html'">
                     <span class="material-symbols-outlined">person</span>
                 </button>
+                <button class="icon-btn" aria-label="Wishlist" onclick="location.href='wishlist.html'">
+                    <span class="material-symbols-outlined">favorite</span>
+                    <span class="wishlist-badge" id="wishlist-badge">0</span>
+                </button>
                 <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
                     <span class="material-symbols-outlined">shopping_bag</span>
                     <span class="cart-badge" id="cart-badge">0</span>
@@ -73,6 +77,7 @@
                             <input type="text" id="reg-first-name" class="input-field" required />
                         </div>
                     </div>
+
 
                     <div class="form-row">
                         <div class="form-field">
@@ -139,6 +144,7 @@
                         In</button>
                 </form>
             </div>
+
 
             <!-- VIEW 2: PROFILE (WHEN LOGGED IN) -->
             <div id="profile-container" class="auth-card" style="display: none;">

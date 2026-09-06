@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Wishlist — LUXE</title>
+    <meta name="description" content="View your saved items, move them to your bag, or purchase them immediately." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- ======= HEADER ======= -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a class="logo" href="index.html">LUXE</a>
+
+            <nav class="nav-links" id="nav-links">
+                <a class="nav-link" href="shop.html">Shop All</a>
+                <a class="nav-link" href="shop.html?category=new-arrivals">New Arrivals</a>
+                <a class="nav-link" href="shop.html?category=textiles">Textiles</a>
+                <a class="nav-link" href="shop.html?category=lighting">Lighting</a>
+                <a class="nav-link" href="shop.html?category=dining">Dining</a>
+                <a class="nav-link " href="sale.html">Sale</a>
+
+            </nav>
+
+            <div class="header-icons">
+                <button class="icon-btn" aria-label="Search" onclick="location.href='shop.html'">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <button class="icon-btn" aria-label="Account" onclick="location.href='account.html'">
+                    <span class="material-symbols-outlined">person</span>
+                </button>
+                <button class="icon-btn active" aria-label="Wishlist" onclick="location.href='wishlist.html'"
+                    style="color: var(--error);">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    <span class="wishlist-badge" id="wishlist-badge">0</span>
+                </button>
+                <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+                <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="menu-toggle">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ======= MAIN ======= -->
+    <main style="flex-grow:1;">
+        <div class="container" style="padding-top:40px; padding-bottom:80px;">
+
+            <!-- Breadcrumbs -->
+            <nav class="breadcrumbs" aria-label="Breadcrumb" id="breadcrumbs">
+                <a href="index.html">Home</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <span class="current">Wishlist</span>
+            </nav>
+
+            <!-- Wishlist Header -->
+            <div class="wishlist-header-row">
+                <div class="wishlist-header-title">
+                    <h1 class="headline-lg">My Wishlist</h1>
+                    <p class="body-md" id="wishlist-item-count">Loading saved items...</p>
+                </div>
+                <div class="wishlist-header-actions" id="wishlist-actions-bar" style="display: none;">
+                    <button type="button" class="btn btn-outline" id="move-all-to-cart-btn" style="font-size: 13px;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">shopping_bag</span>
+                        Add All to Cart
+                    </button>
+                    <button type="button" class="btn btn-text" id="clear-wishlist-btn"
+                        style="color: var(--on-surface-variant); font-size: 13px;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wishlist Content Area -->
+            <div id="wishlist-content">
+                <!-- Dynamic content: Grid or Empty State rendered by wishlist.js -->
+                <div class="wishlist-grid" id="wishlist-grid"></div>
+                <div id="wishlist-empty" style="display: none;"></div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- ======= FOOTER ======= -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a class="logo" href="index.html" style="font-size:32px; line-height:40px;">LUXE</a>
+                <p class="footer-brand-desc">Elevating everyday living through considered design and minimalist
+                    elegance.</p>
+            </div>
+            <div class="footer-links">
+                <a class="footer-link label-sm" href="shop.html">Shop All</a>
+                <a class="footer-link label-sm" href="categories.html">Categories</a>
+                <a class="footer-link label-sm" href="sale.html">Sale</a>
+                <a class="footer-link label-sm" href="wishlist.html">Wishlist</a>
+                <a class="footer-link label-sm" href="account.html">Account</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/wishlist.js"></script>
+</body>
+
+</html>

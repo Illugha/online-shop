@@ -952,6 +952,110 @@ function showCartMessage(message) {
 }
 
 
+// =====================================================
+// WISHLIST SYSTEM
+// =====================================================
+
+const WISHLIST_KEY = 'luxeWishlist';
+
+function getWishlist() {
+    try {
+        return JSON.parse(
+            localStorage.getItem(WISHLIST_KEY)
+        ) || [];
+    } catch (error) {
+        console.error('LUXE: Error reading wishlist', error);
+        return [];
+    }
+}
+
+function saveWishlist(wishlist) {
+    localStorage.setItem(
+        WISHLIST_KEY,
+        JSON.stringify(wishlist)
+    );
+}
+
+function isInWishlist(productId) {
+    if (!productId) return false;
+    const list = getWishlist();
+    return list.some(id => String(id) === String(productId));
+}
+
+function updateWishlistBadge() {
+    const list = getWishlist();
+    const count = list.length;
+
+    document
+        .querySelectorAll('.wishlist-badge')
+        .forEach(badge => {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        });
+}
+
+function updateWishlistButtons(productId, isFavorited) {
+    document
+        .querySelectorAll(`[data-product-id="${productId}"].wishlist-btn, [data-product-id="${productId}"].wishlist-action`)
+        .forEach(btn => {
+            btn.classList.toggle('active', isFavorited);
+            btn.setAttribute(
+                'aria-label',
+                isFavorited ? 'Remove from wishlist' : 'Add to wishlist'
+            );
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isFavorited ? 'favorite' : 'favorite_border';
+            }
+        });
+
+    const productPageToggle = document.getElementById('wishlist-toggle');
+    if (productPageToggle) {
+        const currentId = new URLSearchParams(window.location.search).get('id') || 'minimalist-trench';
+        if (String(currentId) === String(productId)) {
+            productPageToggle.classList.toggle('active', isFavorited);
+            productPageToggle.setAttribute(
+                'aria-label',
+                isFavorited ? 'Remove from wishlist' : 'Add to wishlist'
+            );
+            const icon = productPageToggle.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isFavorited ? 'favorite' : 'favorite_border';
+            }
+        }
+    }
+}
+
+function toggleWishlist(productId) {
+    if (!productId) return false;
+    let list = getWishlist();
+    const index = list.findIndex(id => String(id) === String(productId));
+    let added = false;
+
+    if (index > -1) {
+        list.splice(index, 1);
+        added = false;
+    } else {
+        list.push(String(productId));
+        added = true;
+    }
+
+    saveWishlist(list);
+    updateWishlistBadge();
+    updateWishlistButtons(productId, added);
+
+    const product = catalogProducts.find(p => String(p.id) === String(productId));
+    const productName = product ? product.name : 'Item';
+    showCartMessage(
+        added
+            ? `${productName} added to wishlist`
+            : `${productName} removed from wishlist`
+    );
+
+    return added;
+}
+
+
 // Global access
 window.getCart =
     getCart;
@@ -964,6 +1068,24 @@ window.addToCart =
 
 window.updateCartBadge =
     updateCartBadge;
+
+window.getWishlist =
+    getWishlist;
+
+window.saveWishlist =
+    saveWishlist;
+
+window.isInWishlist =
+    isInWishlist;
+
+window.toggleWishlist =
+    toggleWishlist;
+
+window.updateWishlistBadge =
+    updateWishlistBadge;
+
+window.updateWishlistButtons =
+    updateWishlistButtons;
 
 window.getSaleDiscount =
     getSaleDiscount;
@@ -1109,6 +1231,7 @@ document.addEventListener(
         initImageZoom();
 
         updateCartBadge();
+        updateWishlistBadge();
 
 
         // =================================================
@@ -1565,6 +1688,8 @@ document.addEventListener(
                                 )}`;
 
 
+                            const isFav = isInWishlist(item.id);
+
                             card.innerHTML = `
                                 <div class="related-card-image">
 
@@ -1575,15 +1700,16 @@ document.addEventListener(
 
                                     <button
                                         type="button"
-                                        class="wishlist-btn"
-                                        aria-label="Add ${item.name} to wishlist"
+                                        class="wishlist-btn ${isFav ? 'active' : ''}"
+                                        data-product-id="${item.id}"
+                                        aria-label="${isFav ? `Remove ${item.name} from wishlist` : `Add ${item.name} to wishlist`}"
                                     >
 
                                         <span
                                             class="material-symbols-outlined"
                                             style="font-size:18px;"
                                         >
-                                            favorite_border
+                                            ${isFav ? 'favorite' : 'favorite_border'}
                                         </span>
 
                                     </button>
@@ -1808,182 +1934,61 @@ document.addEventListener(
 
 
         // =================================================
-        // FILTER TOGGLES
+        // FILTER TOGGLES (Размер удален, оставлены Категория и Цена)
         // =================================================
 
         const filterToggles = [
-
             {
-                toggleId:
-                    'filter-category-toggle',
-                contentId:
-                    'filter-category-options'
+                toggleId: 'filter-category-toggle',
+                contentId: 'filter-category-options'
             },
-
             {
-                toggleId:
-                    'filter-price-toggle',
-                contentId:
-                    'filter-price-options'
-            },
-
-            {
-                toggleId:
-                    'filter-size-toggle',
-                contentId:
-                    'filter-size-options'
+                toggleId: 'filter-price-toggle',
+                contentId: 'filter-price-options'
             }
-
         ];
 
+        filterToggles.forEach(filter => {
+            const toggleBtn = document.getElementById(filter.toggleId);
+            const content = document.getElementById(filter.contentId);
 
-        filterToggles.forEach(
-            filter => {
+            if (toggleBtn && content) {
+                toggleBtn.addEventListener('click', () => {
+                    const icon = toggleBtn.querySelector('.material-symbols-outlined');
 
-                const toggleBtn =
-                    document.getElementById(
-                        filter.toggleId
-                    );
+                    if (content.style.display === 'none') {
+                        content.style.display = content.dataset.displayType || 'block';
 
-
-                const content =
-                    document.getElementById(
-                        filter.contentId
-                    );
-
-
-                if (
-                    toggleBtn &&
-                    content
-                ) {
-
-                    toggleBtn.addEventListener(
-                        'click',
-                        () => {
-
-                            const icon =
-                                toggleBtn.querySelector(
-                                    '.material-symbols-outlined'
-                                );
-
-
-                            if (
-                                content.style.display ===
-                                'none'
-                            ) {
-
-                                content.style.display =
-                                    content.dataset
-                                        .displayType ||
-                                    'block';
-
-
-                                if (
-                                    content.id ===
-                                    'filter-size-options'
-                                ) {
-
-                                    content.style.display =
-                                        'grid';
-                                }
-
-
-                                if (
-                                    content.id ===
-                                    'filter-price-options'
-                                ) {
-
-                                    content.style.display =
-                                        'flex';
-                                }
-
-
-                                if (
-                                    content.id ===
-                                    'filter-category-options'
-                                ) {
-
-                                    content.style.display =
-                                        'flex';
-                                }
-
-
-                                if (icon) {
-
-                                    icon.textContent =
-                                        'expand_less';
-                                }
-
-                            } else {
-
-                                content.dataset
-                                    .displayType =
-                                    window.getComputedStyle(
-                                        content
-                                    ).display;
-
-
-                                content.style.display =
-                                    'none';
-
-
-                                if (icon) {
-
-                                    icon.textContent =
-                                        'expand_more';
-                                }
-                            }
+                        if (content.id === 'filter-category-options') {
+                            content.style.display = 'flex';
                         }
-                    );
-                }
-            }
-        );
 
+                        if (icon) icon.textContent = 'expand_less';
+                    } else {
+                        content.dataset.displayType = window.getComputedStyle(content).display;
+                        content.style.display = 'none';
 
-        // =================================================
-        // SIZE SELECTOR
-        // =================================================
-
-        const sizeContainers =
-            document.querySelectorAll(
-                '.size-filter-grid, #size-grid'
-            );
-
-
-        sizeContainers.forEach(
-            container => {
-
-                const sizeBtns =
-                    container.querySelectorAll(
-                        '.size-btn:not(.disabled)'
-                    );
-
-
-                sizeBtns.forEach(
-                    btn => {
-
-                        btn.addEventListener(
-                            'click',
-                            () => {
-
-                                sizeBtns.forEach(
-                                    item =>
-                                        item.classList
-                                            .remove(
-                                                'active'
-                                            )
-                                );
-
-
-                                btn.classList.add(
-                                    'active'
-                                );
-                            }
-                        );
+                        if (icon) icon.textContent = 'expand_more';
                     }
-                );
+                });
             }
-        );
+        });
+
+        // =================================================
+        // SIZE SELECTOR (Оставлен только выбор размера в карточке товара #size-grid)
+        // =================================================
+
+        const sizeContainers = document.querySelectorAll('#size-grid');
+
+        sizeContainers.forEach(container => {
+            const sizeBtns = container.querySelectorAll('.size-btn:not(.disabled)');
+            sizeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeBtns.forEach(item => item.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
 
 
         // =================================================
@@ -2171,66 +2176,70 @@ document.addEventListener(
 
 
         // =================================================
-        // WISHLIST
+        // WISHLIST INITIALIZATION & HANDLER
         // =================================================
 
-        document
-            .querySelectorAll(
-                '.wishlist-action, .wishlist-btn'
-            )
-            .forEach(
-                btn => {
-
-                    btn.addEventListener(
-                        'click',
-                        event => {
-
-                            event.preventDefault();
-                            event.stopPropagation();
-
-
-                            const icon =
-                                btn.querySelector(
-                                    '.material-symbols-outlined'
-                                );
-
-
-                            if (!icon) {
-                                return;
-                            }
-
-
-                            if (
-                                icon.textContent.trim() ===
-                                'favorite_border'
-                            ) {
-
-                                icon.textContent =
-                                    'favorite';
-
-                                icon.classList.add(
-                                    'filled'
-                                );
-
-                                icon.style.color =
-                                    'var(--primary)';
-
-                            } else {
-
-                                icon.textContent =
-                                    'favorite_border';
-
-                                icon.classList.remove(
-                                    'filled'
-                                );
-
-                                icon.style.color =
-                                    '';
-                            }
-                        }
-                    );
-                }
+        // 1. Initialize product page wishlist button
+        const currentProductPageId =
+            new URLSearchParams(window.location.search).get('id') || 'minimalist-trench';
+        const productWishlistBtn = document.getElementById('wishlist-toggle');
+        if (productWishlistBtn) {
+            const isFav = isInWishlist(currentProductPageId);
+            productWishlistBtn.classList.toggle('active', isFav);
+            productWishlistBtn.setAttribute('data-product-id', currentProductPageId);
+            productWishlistBtn.setAttribute(
+                'aria-label',
+                isFav ? 'Remove from wishlist' : 'Add to wishlist'
             );
+            const icon = productWishlistBtn.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isFav ? 'favorite' : 'favorite_border';
+            }
+        }
+
+        // 2. Initialize any static buttons
+        document.querySelectorAll('.wishlist-btn').forEach(btn => {
+            let pid = btn.dataset.productId;
+            if (!pid) {
+                const card = btn.closest('.product-card, .related-card');
+                if (card) {
+                    pid = card.id || new URL(card.href, window.location.origin).searchParams.get('id');
+                    if (pid) btn.setAttribute('data-product-id', pid);
+                }
+            }
+            if (pid) {
+                const isFav = isInWishlist(pid);
+                btn.classList.toggle('active', isFav);
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.textContent = isFav ? 'favorite' : 'favorite_border';
+                }
+            }
+        });
+
+        // 3. Delegated click handler for all wishlist buttons
+        document.addEventListener('click', event => {
+            const btn = event.target.closest('.wishlist-btn, .wishlist-action, #wishlist-toggle');
+            if (!btn) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            let productId = btn.dataset.productId;
+            if (!productId && btn.id === 'wishlist-toggle') {
+                productId = new URLSearchParams(window.location.search).get('id') || 'minimalist-trench';
+            }
+            if (!productId) {
+                const card = btn.closest('.product-card, .related-card');
+                if (card) {
+                    productId = card.id || new URL(card.href, window.location.origin).searchParams.get('id');
+                }
+            }
+
+            if (productId) {
+                toggleWishlist(productId);
+            }
+        });
 
 
         // =================================================
@@ -2432,89 +2441,6 @@ document.addEventListener(
 
 
         // =================================================
-        // CHECKOUT FORM
-        // =================================================
-
-        const checkoutForm =
-            document.getElementById(
-                'checkout-form'
-            );
-
-
-        if (checkoutForm) {
-
-            checkoutForm.addEventListener(
-                'submit',
-                event => {
-
-                    event.preventDefault();
-
-
-                    const cart =
-                        getCart();
-
-
-                    if (
-                        cart.length ===
-                        0
-                    ) {
-
-                        alert(
-                            'Your cart is empty.'
-                        );
-
-                        return;
-                    }
-
-
-                    const modal =
-                        document.getElementById(
-                            'success-modal'
-                        );
-
-
-                    if (modal) {
-
-                        modal.style.display =
-                            'flex';
-                    }
-                }
-            );
-        }
-
-
-        // =================================================
-        // CLOSE MODAL
-        // =================================================
-
-        const closeModalBtn =
-            document.getElementById(
-                'close-modal'
-            );
-
-
-        if (closeModalBtn) {
-
-            closeModalBtn.addEventListener(
-                'click',
-                () => {
-
-                    localStorage.removeItem(
-                        CART_KEY
-                    );
-
-
-                    updateCartBadge();
-
-
-                    window.location.href =
-                        'index.html';
-                }
-            );
-        }
-
-
-        // =================================================
         // SHOP PAGE
         // =================================================
 
@@ -2529,682 +2455,320 @@ document.addEventListener(
 
 
         if (isShopPage) {
-
-            const shopUrlParams =
-                new URLSearchParams(
-                    window.location.search
-                );
-
-
+            const shopUrlParams = new URLSearchParams(window.location.search);
             const savedPage = parseInt(
                 shopUrlParams.get('page') || sessionStorage.getItem('luxe_shop_page'),
                 10
             );
             const initialPage = Number.isNaN(savedPage) || savedPage < 1 ? 1 : savedPage;
 
+            const category = shopUrlParams.get('category');
+            const categoryMap = Object.fromEntries(
+                Object.entries(curatedCategories).map(([slug, details]) => [slug, details.title])
+            );
+            const categoryView = categoryMap[category];
+            const productGrid = document.getElementById('product-grid');
 
-            const category =
-                shopUrlParams.get(
-                    'category'
-                );
-
-
-            const categoryMap =
-                Object.fromEntries(
-                    Object.entries(
-                        curatedCategories
-                    ).map(
-                        ([slug, details]) =>
-                            [
-                                slug,
-                                details.title
-                            ]
-                    )
-                );
-
-
-            const categoryView =
-                categoryMap[
-                category
-                ];
-
-
-            const productGrid =
-                document.getElementById(
-                    'product-grid'
-                );
-
-
-            /*
-             * IMPORTANT:
-             *
-             * Category pages use homeProducts.
-             *
-             * Shop All uses catalogProducts,
-             * which contains:
-             *
-             * products + homeProducts
-             */
-
-            const shopProducts =
-                categoryView
-                    ? homeProducts.filter(
-                        product =>
-                            product.category ===
-                            category
-                    )
-                    : catalogProducts;
-
+            const shopProducts = categoryView
+                ? homeProducts.filter(product => product.category === category)
+                : catalogProducts;
 
             if (productGrid) {
+                productGrid.innerHTML = '';
 
-                productGrid.innerHTML =
-                    '';
+                shopProducts.forEach((product, index) => {
+                    const card = document.createElement('a');
+                    card.className = 'product-card';
+                    card.href = `product.html?id=${encodeURIComponent(product.id)}`;
+                    card.id = product.id;
 
+                    const effectivePrice = isProductOnSale(product)
+                        ? getSalePrice(product)
+                        : getNumericPrice(product.price);
 
-                shopProducts.forEach(
-                    product => {
+                    card.dataset.price = effectivePrice;
+                    card.dataset.originalIndex = index;
 
-                        const card =
-                            document.createElement(
-                                'a'
-                            );
+                    if (product.category) {
+                        card.dataset.category = product.category;
+                    }
 
+                    const chipMarkup = product.chip
+                        ? `<span class="chip ${product.chip.class}">${product.chip.text}</span>`
+                        : '';
+                    const saleBadgeMarkup = getSaleBadgeMarkup(product);
+                    const priceMarkup = getProductPriceMarkup(product);
+                    const isFav = isInWishlist(product.id);
 
-                        card.className =
-                            'product-card';
-
-
-                        card.href =
-                            `product.html?id=${encodeURIComponent(
-                                product.id
-                            )}`;
-
-
-                        card.id =
-                            product.id;
-
-
-                        if (product.category) {
-
-                            card.dataset.category =
-                                product.category;
-                        }
-
-
-                        const chipMarkup =
-                            product.chip
-                                ? `
-                                    <span
-                                        class="chip ${product.chip.class}"
-                                    >
-                                        ${product.chip.text}
-                                    </span>
-                                `
-                                : '';
-
-
-                        const saleBadgeMarkup =
-                            getSaleBadgeMarkup(
-                                product
-                            );
-
-
-                        const priceMarkup =
-                            getProductPriceMarkup(
-                                product
-                            );
-
-
-                        card.innerHTML = `
-
-                            <div
-                                class="product-card-image"
-                            >
-
-                                <img
-                                    src="${product.images[0]}"
-                                    alt="${product.name}"
-                                />
-
-
-                                ${chipMarkup}
-
-
-                                ${saleBadgeMarkup}
-
-
-                                <button
-                                    type="button"
-                                    class="quick-add"
-                                    data-product-id="${product.id}"
-                                    aria-label="Quick add ${product.name} to cart"
-                                >
-
-                                    <span
-                                        class="material-symbols-outlined"
-                                        style="font-size:20px;"
-                                    >
-                                        shopping_bag
-                                    </span>
-
-                                </button>
-
+                    card.innerHTML = `
+                        <div class="product-card-image">
+                            <img src="${product.images[0]}" alt="${product.name}" />
+                            ${chipMarkup}
+                            ${saleBadgeMarkup}
+                            <button type="button" class="wishlist-btn ${isFav ? 'active' : ''}" data-product-id="${product.id}" aria-label="${isFav ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}">
+                                <span class="material-symbols-outlined" style="font-size:18px;">
+                                    ${isFav ? 'favorite' : 'favorite_border'}
+                                </span>
+                            </button>
+                            <button type="button" class="quick-add" data-product-id="${product.id}" aria-label="Quick add ${product.name} to cart">
+                                <span class="material-symbols-outlined" style="font-size:20px;">shopping_bag</span>
+                            </button>
+                        </div>
+                        <div class="product-card-info">
+                            <div>
+                                <h3 class="product-card-name">${product.name}</h3>
+                                <p class="product-card-variant">${product.variant}</p>
                             </div>
-
-
-                            <div
-                                class="product-card-info"
-                            >
-
-                                <div>
-
-                                    <h3
-                                        class="product-card-name"
-                                    >
-                                        ${product.name}
-                                    </h3>
-
-
-                                    <p
-                                        class="product-card-variant"
-                                    >
-                                        ${product.variant}
-                                    </p>
-
-                                </div>
-
-
-                                ${priceMarkup}
-
-                            </div>
-                        `;
-
-
-                        productGrid.appendChild(
-                            card
-                        );
-                    }
-                );
-            }
-
-
-            // =================================================
-            // PAGINATION
-            // =================================================
-
-            const allProducts =
-                Array.from(
-                    document.querySelectorAll(
-                        '.product-card'
-                    )
-                );
-
-
-            const pagination =
-                document.getElementById(
-                    'pagination'
-                );
-
-
-            const productsForView =
-                allProducts;
-
-
-            const itemsPerPage =
-                6;
-
-
-            const pageCount =
-                Math.max(
-                    1,
-                    Math.ceil(
-                        productsForView.length /
-                        itemsPerPage
-                    )
-                );
-
-
-            let currentPage =
-                1;
-
-
-            // =================================================
-            // NAVIGATION
-            // =================================================
-
-            document
-                .querySelectorAll(
-                    '.nav-link'
-                )
-                .forEach(
-                    link => {
-
-                        const href =
-                            link.getAttribute(
-                                'href'
-                            );
-
-
-                        const isCurrent =
-                            categoryView
-                                ? href ===
-                                `shop.html?category=${category}`
-                                : href ===
-                                'shop.html';
-
-
-                        link.classList.toggle(
-                            'active',
-                            isCurrent
-                        );
-
-
-                        if (
-                            isCurrent
-                        ) {
-
-                            link.setAttribute(
-                                'aria-current',
-                                'page'
-                            );
-
-                        } else {
-
-                            link.removeAttribute(
-                                'aria-current'
-                            );
-                        }
-                    }
-                );
-
-
-            // =================================================
-            // SHOP HEADER
-            // =================================================
-
-            const pageTitle =
-                document.querySelector(
-                    '.shop-header h1'
-                );
-
-
-            const breadcrumbCurrent =
-                document.querySelector(
-                    '#breadcrumbs .current'
-                );
-
-
-            const itemCount =
-                document.querySelector(
-                    '.shop-header .body-md'
-                );
-
-
-            const viewTitle =
-                categoryView ||
-                'Shop All';
-
-
-            if (pageTitle) {
-
-                pageTitle.textContent =
-                    viewTitle;
-            }
-
-
-            if (breadcrumbCurrent) {
-
-                breadcrumbCurrent.textContent =
-                    viewTitle;
-            }
-
-
-            if (itemCount) {
-
-                const count =
-                    productsForView.length;
-
-
-                itemCount.textContent =
-                    `Showing ${count} ${count === 1
-                        ? 'item'
-                        : 'items'
-                    }`;
-            }
-
-
-            document.title =
-                `${viewTitle} - LUXE`;
-
-
-            // =================================================
-            // CATEGORY FILTER
-            // =================================================
-
-            document
-                .querySelectorAll(
-                    '#filter-category-options input[data-category]'
-                )
-                .forEach(
-                    input => {
-
-                        input.checked =
-                            input.dataset.category ===
-                            category;
-
-
-                        input.addEventListener(
-                            'change',
-                            () => {
-
-                                window.location.href =
-                                    input.checked
-                                        ? `shop.html?category=${encodeURIComponent(
-                                            input.dataset.category
-                                        )}`
-                                        : 'shop.html';
-                            }
-                        );
-                    }
-                );
-
-
-            // =================================================
-            // SHOW PAGE
-            // =================================================
-
-            const showPage =
-                page => {
-
-                    currentPage =
-                        Math.min(
-                            Math.max(
-                                page,
-                                1
-                            ),
-                            pageCount
-                        );
-
-                    // ==========================================
-                    // СОХРАНЯЕМ СТРАНИЦУ В ПАМЯТЬ И В АДРЕСНУЮ СТРОКУ
-                    // ==========================================
-                    sessionStorage.setItem('luxe_shop_page', currentPage);
-
-                    const currentUrl = new URL(window.location.href);
-                    if (currentPage > 1) {
-                        currentUrl.searchParams.set('page', currentPage);
-                    } else {
-                        currentUrl.searchParams.delete('page');
-                    }
-                    // Меняем URL без перезагрузки страницы
-                    window.history.replaceState({ page: currentPage }, '', currentUrl);
-                    // ==========================================
-
-                    const firstItem = (currentPage - 1) * itemsPerPage;
-
-                    const cardsOnPage =
-                        productsForView.slice(
-                            firstItem,
-                            firstItem +
-                            itemsPerPage
-                        );
-
-
-                    allProducts.forEach(
-                        card => {
-
-                            card.style.display =
-                                cardsOnPage.includes(
-                                    card
-                                )
-                                    ? 'block'
-                                    : 'none';
-                        }
-                    );
-
-
-                    if (itemCount) {
-
-                        if (
-                            productsForView.length ===
-                            0
-                        ) {
-
-                            itemCount.textContent =
-                                'No products found';
-
-                        } else if (
-                            productsForView.length ===
-                            1
-                        ) {
-
-                            itemCount.textContent =
-                                'Showing 1 of 1 item';
-
-                        } else {
-
-                            const firstVisible =
-                                firstItem + 1;
-
-
-                            const lastVisible =
-                                Math.min(
-                                    firstItem +
-                                    itemsPerPage,
-                                    productsForView.length
-                                );
-
-
-                            itemCount.textContent =
-                                `Showing ${firstVisible}-${lastVisible} of ${productsForView.length} items`;
-                        }
-                    }
-
-
-                    renderPagination();
-                };
-
-
-            // =================================================
-            // PAGE BUTTON
-            // =================================================
-
-            const createPageButton =
-                page => {
-
-                    const button =
-                        document.createElement(
-                            'button'
-                        );
-
-
-                    button.className =
-                        `page-btn ${page === currentPage
-                            ? 'active'
-                            : ''
-                        }`;
-
-
-                    button.type =
-                        'button';
-
-
-                    button.textContent =
-                        page;
-
-
-                    button.setAttribute(
-                        'aria-label',
-                        `Page ${page}`
-                    );
-
-
-                    if (
-                        page ===
-                        currentPage
-                    ) {
-
-                        button.setAttribute(
-                            'aria-current',
-                            'page'
-                        );
-                    }
-
-
-                    button.addEventListener(
-                        'click',
-                        () => {
-
-                            showPage(
-                                page
-                            );
-                        }
-                    );
-
-
-                    return button;
-                };
-
-
-            // =================================================
-            // ARROW BUTTON
-            // =================================================
-
-            const createArrowButton =
-                direction => {
-
-                    const isPrevious =
-                        direction ===
-                        'previous';
-
-
-                    const button =
-                        document.createElement(
-                            'button'
-                        );
-
-
-                    button.className =
-                        'page-arrow';
-
-
-                    button.type =
-                        'button';
-
-
-                    button.disabled =
-                        isPrevious
-                            ? currentPage ===
-                            1
-                            : currentPage ===
-                            pageCount;
-
-
-                    button.setAttribute(
-                        'aria-label',
-                        isPrevious
-                            ? 'Previous page'
-                            : 'Next page'
-                    );
-
-
-                    button.innerHTML = `
-                        <span
-                            class="material-symbols-outlined"
-                        >
-                            ${isPrevious
-                            ? 'chevron_left'
-                            : 'chevron_right'
-                        }
-                        </span>
+                            ${priceMarkup}
+                        </div>
                     `;
 
-
-                    button.addEventListener(
-                        'click',
-                        () => {
-
-                            showPage(
-                                currentPage +
-                                (
-                                    isPrevious
-                                        ? -1
-                                        : 1
-                                )
-                            );
-                        }
-                    );
-
-
-                    return button;
-                };
-
-
-            // =================================================
-            // PAGINATION
-            // =================================================
-
-            function renderPagination() {
-
-                if (!pagination) {
-                    return;
-                }
-
-
-                pagination.innerHTML =
-                    '';
-
-
-                if (
-                    pageCount <=
-                    1
-                ) {
-
-                    pagination.hidden =
-                        true;
-
-                    return;
-                }
-
-
-                pagination.hidden =
-                    false;
-
-
-                pagination.appendChild(
-                    createArrowButton(
-                        'previous'
-                    )
-                );
-
-
-                for (
-                    let page = 1;
-                    page <= pageCount;
-                    page++
-                ) {
-
-                    pagination.appendChild(
-                        createPageButton(
-                            page
-                        )
-                    );
-                }
-
-
-                pagination.appendChild(
-                    createArrowButton(
-                        'next'
-                    )
-                );
+                    productGrid.appendChild(card);
+                });
             }
 
+            const allProducts = Array.from(document.querySelectorAll('.product-card'));
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 6;
 
-            // Открываем сохраненную страницу вместо жесткой единицы
-            showPage(initialPage);
+            let productsForView = [...allProducts];
+            let pageCount = Math.max(1, Math.ceil(productsForView.length / itemsPerPage));
+            let currentPage = 1;
 
-            // Слушаем стрелки браузера «Назад» и «Вперед»
+            const pageTitle = document.querySelector('.shop-header h1');
+            const breadcrumbCurrent = document.querySelector('#breadcrumbs .current');
+            const itemCount = document.querySelector('.shop-header .body-md');
+            const viewTitle = categoryView || 'Shop All';
+
+            if (pageTitle) pageTitle.textContent = viewTitle;
+            if (breadcrumbCurrent) breadcrumbCurrent.textContent = viewTitle;
+            document.title = `${viewTitle} - LUXE`;
+
+            // Категории
+            document.querySelectorAll('#filter-category-options input[data-category]').forEach(input => {
+                input.checked = input.dataset.category === category;
+                input.addEventListener('change', () => {
+                    window.location.href = input.checked
+                        ? `shop.html?category=${encodeURIComponent(input.dataset.category)}`
+                        : 'shop.html';
+                });
+            });
+
+            // Навигация
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                const isCurrent = categoryView
+                    ? href === `shop.html?category=${category}`
+                    : href === 'shop.html';
+
+                link.classList.toggle('active', isCurrent);
+                if (isCurrent) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            // Элементы фильтрации цен
+            const priceMinInput = document.getElementById('price-min');
+            const priceMaxInput = document.getElementById('price-max');
+            const priceApplyBtn = document.getElementById('price-apply-btn');
+            const priceResetBtn = document.getElementById('price-reset-btn');
+
+            // Заглушка, если товары не найдены
+            let noProductsEl = document.getElementById('shop-no-products');
+            if (!noProductsEl && productGrid) {
+                noProductsEl = document.createElement('div');
+                noProductsEl.id = 'shop-no-products';
+                noProductsEl.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 64px 20px; display: none;';
+                noProductsEl.innerHTML = `
+                    <span class="material-symbols-outlined" style="font-size: 48px; color: var(--outline); margin-bottom: 16px;">search_off</span>
+                    <h3 class="headline-md" style="margin-bottom: 8px;">No products found</h3>
+                    <p class="body-md" style="color: var(--on-surface-variant); margin-bottom: 20px;">Try adjusting your price range.</p>
+                    <button type="button" class="btn btn-outline" id="no-products-reset-btn" style="padding: 8px 20px;">Reset Price Filter</button>
+                `;
+                productGrid.appendChild(noProductsEl);
+                document.getElementById('no-products-reset-btn')?.addEventListener('click', resetPriceFilter);
+            }
+
+            function applyPriceFilter(resetToFirstPage = true) {
+                const minVal = parseFloat(priceMinInput?.value);
+                const maxVal = parseFloat(priceMaxInput?.value);
+
+                const hasMin = !isNaN(minVal) && minVal >= 0;
+                const hasMax = !isNaN(maxVal) && maxVal >= 0;
+
+                if (priceResetBtn) {
+                    priceResetBtn.style.display = (hasMin || hasMax) ? 'inline-block' : 'none';
+                }
+
+                productsForView = allProducts.filter(card => {
+                    const price = parseFloat(card.dataset.price) || 0;
+                    if (hasMin && price < minVal) return false;
+                    if (hasMax && price > maxVal) return false;
+                    return true;
+                });
+
+                const currentUrl = new URL(window.location.href);
+                if (hasMin) currentUrl.searchParams.set('min_price', minVal);
+                else currentUrl.searchParams.delete('min_price');
+
+                if (hasMax) currentUrl.searchParams.set('max_price', maxVal);
+                else currentUrl.searchParams.delete('max_price');
+
+                window.history.replaceState({}, '', currentUrl);
+
+                pageCount = Math.max(1, Math.ceil(productsForView.length / itemsPerPage));
+                showPage(resetToFirstPage ? 1 : currentPage);
+            }
+
+            function resetPriceFilter() {
+                if (priceMinInput) priceMinInput.value = '';
+                if (priceMaxInput) priceMaxInput.value = '';
+                if (priceResetBtn) priceResetBtn.style.display = 'none';
+
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete('min_price');
+                currentUrl.searchParams.delete('max_price');
+                window.history.replaceState({}, '', currentUrl);
+
+                productsForView = [...allProducts];
+                pageCount = Math.max(1, Math.ceil(productsForView.length / itemsPerPage));
+                showPage(1);
+            }
+
+            if (priceApplyBtn) {
+                priceApplyBtn.addEventListener('click', () => applyPriceFilter(true));
+            }
+            if (priceResetBtn) {
+                priceResetBtn.addEventListener('click', resetPriceFilter);
+            }
+            if (priceMinInput) {
+                priceMinInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') applyPriceFilter(true);
+                });
+            }
+            if (priceMaxInput) {
+                priceMaxInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') applyPriceFilter(true);
+                });
+            }
+
+            // Сортировка по цене и популярности
+            const sortSelect = document.getElementById('sort-select');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', () => {
+                    const val = sortSelect.value;
+                    if (val === 'Price: Low to High') {
+                        allProducts.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+                    } else if (val === 'Price: High to Low') {
+                        allProducts.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+                    } else {
+                        allProducts.sort((a, b) => parseInt(a.dataset.originalIndex, 10) - parseInt(b.dataset.originalIndex, 10));
+                    }
+
+                    allProducts.forEach(card => productGrid.appendChild(card));
+                    applyPriceFilter(true);
+                });
+            }
+
+            // Отображение страницы
+            const showPage = page => {
+                currentPage = Math.min(Math.max(page, 1), pageCount);
+
+                sessionStorage.setItem('luxe_shop_page', currentPage);
+                const currentUrl = new URL(window.location.href);
+                if (currentPage > 1) {
+                    currentUrl.searchParams.set('page', currentPage);
+                } else {
+                    currentUrl.searchParams.delete('page');
+                }
+                window.history.replaceState({ page: currentPage }, '', currentUrl);
+
+                const firstItem = (currentPage - 1) * itemsPerPage;
+                const cardsOnPage = productsForView.slice(firstItem, firstItem + itemsPerPage);
+
+                allProducts.forEach(card => {
+                    card.style.display = cardsOnPage.includes(card) ? 'block' : 'none';
+                });
+
+                if (noProductsEl) {
+                    noProductsEl.style.display = productsForView.length === 0 ? 'block' : 'none';
+                }
+
+                if (itemCount) {
+                    if (productsForView.length === 0) {
+                        itemCount.textContent = 'Showing 0 items';
+                    } else if (productsForView.length === 1) {
+                        itemCount.textContent = 'Showing 1 of 1 item';
+                    } else {
+                        const firstVisible = firstItem + 1;
+                        const lastVisible = Math.min(firstItem + itemsPerPage, productsForView.length);
+                        itemCount.textContent = `Showing ${firstVisible}-${lastVisible} of ${productsForView.length} items`;
+                    }
+                }
+
+                renderPagination();
+            };
+
+            const createPageButton = page => {
+                const button = document.createElement('button');
+                button.className = `page-btn ${page === currentPage ? 'active' : ''}`;
+                button.type = 'button';
+                button.textContent = page;
+                button.setAttribute('aria-label', `Page ${page}`);
+                if (page === currentPage) button.setAttribute('aria-current', 'page');
+                button.addEventListener('click', () => showPage(page));
+                return button;
+            };
+
+            const createArrowButton = direction => {
+                const isPrevious = direction === 'previous';
+                const button = document.createElement('button');
+                button.className = 'page-arrow';
+                button.type = 'button';
+                button.disabled = isPrevious ? currentPage === 1 : currentPage === pageCount;
+                button.setAttribute('aria-label', isPrevious ? 'Previous page' : 'Next page');
+                button.innerHTML = `
+                    <span class="material-symbols-outlined">
+                        ${isPrevious ? 'chevron_left' : 'chevron_right'}
+                    </span>
+                `;
+                button.addEventListener('click', () => {
+                    showPage(currentPage + (isPrevious ? -1 : 1));
+                });
+                return button;
+            };
+
+            function renderPagination() {
+                if (!pagination) return;
+                pagination.innerHTML = '';
+
+                if (pageCount <= 1 || productsForView.length === 0) {
+                    pagination.hidden = true;
+                    return;
+                }
+
+                pagination.hidden = false;
+                pagination.appendChild(createArrowButton('previous'));
+                for (let page = 1; page <= pageCount; page++) {
+                    pagination.appendChild(createPageButton(page));
+                }
+                pagination.appendChild(createArrowButton('next'));
+            }
+
+            // Инициализация значений из URL (если переданы min_price / max_price)
+            const urlMin = shopUrlParams.get('min_price');
+            const urlMax = shopUrlParams.get('max_price');
+            if (urlMin && priceMinInput) priceMinInput.value = urlMin;
+            if (urlMax && priceMaxInput) priceMaxInput.value = urlMax;
+
+            if (urlMin || urlMax) {
+                applyPriceFilter(false);
+            } else {
+                showPage(initialPage);
+            }
+
             window.addEventListener('popstate', () => {
                 const params = new URLSearchParams(window.location.search);
                 const pageFromUrl = parseInt(params.get('page'), 10) || 1;
@@ -3212,12 +2776,12 @@ document.addEventListener(
             });
         }
 
-
         // =================================================
         // FINAL CART BADGE
         // =================================================
 
         updateCartBadge();
+        updateWishlistBadge();
 
     }
 );

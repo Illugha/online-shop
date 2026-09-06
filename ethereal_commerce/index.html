@@ -27,18 +27,21 @@
         <a class="nav-link" href="shop.html?category=textiles">Textiles</a>
         <a class="nav-link" href="shop.html?category=lighting">Lighting</a>
         <a class="nav-link" href="shop.html?category=dining">Dining</a>
+        <a class="nav-link " href="sale.html">Sale</a>
+
       </nav>
 
       <div class="header-icons">
         <button class="icon-btn" aria-label="Account" onclick="location.href='account.html'">
           <span class="material-symbols-outlined">person</span>
         </button>
-        <button class="icon-btn" aria-label="Wishlist">
+        <button class="icon-btn" aria-label="Wishlist" onclick="location.href='wishlist.html'">
           <span class="material-symbols-outlined">favorite</span>
+          <span class="wishlist-badge" id="wishlist-badge">0</span>
         </button>
         <button class="icon-btn" aria-label="Cart" onclick="location.href='cart.html'">
           <span class="material-symbols-outlined">shopping_bag</span>
-          <span class="cart-badge" id="cart-badge">2</span>
+          <span class="cart-badge" id="cart-badge">0</span>
         </button>
         <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="menu-toggle">
           <span class="material-symbols-outlined">menu</span>
@@ -87,6 +90,7 @@
         </div>
       </div>
     </section>
+
 
     <!-- Curated Categories -->
     <section class="categories-section" id="categories">
@@ -150,6 +154,7 @@
     </section>
 
   </main>
+
 
   <!-- ======= FOOTER ======= -->
   <footer class="site-footer">
