@@ -2752,7 +2752,7 @@ document.addEventListener(
 
 
             const itemsPerPage =
-                5;
+                6;
 
 
             const pageCount =

@@ -2475,7 +2475,7 @@ ol {
 /* Окно с увеличенной картинкой (всплывает справа от фото) */
 .zoom-result {
   position: absolute;
-  top: 0;
+  top: 10px;
   left: calc(100% + 37px);
   /* отступ 24px справа от фото */
   width: 480px;
