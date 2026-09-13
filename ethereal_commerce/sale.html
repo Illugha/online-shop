@@ -192,47 +192,36 @@
                         <div class="filter-options" id="sale-filter-options">
 
                             <label class="checkbox-label">
-
                                 <input type="checkbox" class="sale-discount-filter" value="10">
-
                                 <span>
-                                    10% off
+                                    10% off <span class="discount-count" data-discount="10"></span>
                                 </span>
-
                             </label>
 
-
                             <label class="checkbox-label">
-
                                 <input type="checkbox" class="sale-discount-filter" value="15">
-
                                 <span>
-                                    15% off
+                                    15% off <span class="discount-count" data-discount="15"></span>
                                 </span>
-
                             </label>
 
-
                             <label class="checkbox-label">
-
                                 <input type="checkbox" class="sale-discount-filter" value="20">
-
                                 <span>
-                                    20% off
+                                    20% off <span class="discount-count" data-discount="20"></span>
                                 </span>
-
                             </label>
-
 
                             <label class="checkbox-label">
-
                                 <input type="checkbox" class="sale-discount-filter" value="25">
-
                                 <span>
-                                    25% off
+                                    25% off <span class="discount-count" data-discount="25"></span>
                                 </span>
-
                             </label>
+
+                            <button type="button" id="sale-filter-reset" style="margin-top: 4px; font-size: 13px; color: var(--on-surface-variant); background: none; border: none; cursor: pointer; text-decoration: underline; display: none; text-align: left; padding: 4px 0;">
+                                Reset Filter
+                            </button>
 
                         </div>
 
@@ -244,6 +233,15 @@
                 <!-- PRODUCTS -->
 
                 <div class="shop-content">
+
+                    <!-- Mobile / Quick Filter Pills -->
+                    <div class="sale-mobile-filters" id="sale-mobile-filters">
+                        <button type="button" class="sale-pill active" data-discount="all">All</button>
+                        <button type="button" class="sale-pill" data-discount="10">10% off</button>
+                        <button type="button" class="sale-pill" data-discount="15">15% off</button>
+                        <button type="button" class="sale-pill" data-discount="20">20% off</button>
+                        <button type="button" class="sale-pill" data-discount="25">25% off</button>
+                    </div>
 
                     <div class="product-grid" id="sale-product-grid">
                     </div>

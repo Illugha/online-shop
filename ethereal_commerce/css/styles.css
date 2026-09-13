@@ -2267,6 +2267,60 @@ ol {
   color: var(--error);
 }
 
+.discount-count {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  margin-left: 4px;
+}
+
+.sale-mobile-filters {
+  display: none;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.sale-mobile-filters::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sale-mobile-filters {
+    display: flex;
+  }
+}
+
+.sale-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface);
+  color: var(--on-surface-variant);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sale-pill:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.sale-pill.active {
+  background: var(--primary);
+  color: var(--surface);
+  border-color: var(--primary);
+}
+
 /* =====================================================
    HOME SALE BANNER
    ===================================================== */
