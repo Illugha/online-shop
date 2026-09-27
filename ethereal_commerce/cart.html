@@ -177,8 +177,23 @@
                 Subtotal
               </span>
 
-              <span>
+              <span id="cart-subtotal">
                 $0.00
+              </span>
+
+            </div>
+
+
+            <!-- DISCOUNT -->
+
+            <div class="summary-line" id="cart-discount-line" style="display:none; color:#2e7d32; font-weight:600;">
+
+              <span id="cart-discount-label">
+                Discount
+              </span>
+
+              <span id="cart-discount-amount">
+                -$0.00
               </span>
 
             </div>
@@ -207,7 +222,7 @@
                 Tax
               </span>
 
-              <span>
+              <span id="cart-tax">
                 $0.00
               </span>
 
@@ -243,13 +258,20 @@
 
             <div class="promo-row">
 
-              <input type="text" class="input-field" id="promo" placeholder="Enter code" autocomplete="off" />
+              <input type="text" class="input-field" id="promo" placeholder="Enter code (e.g. LUXE15)" autocomplete="off" />
 
 
               <button type="button" class="btn btn-secondary" id="apply-promo">
                 Apply
               </button>
 
+            </div>
+
+            <div id="promo-message" style="display:none; margin-top:8px; font-size:13px; line-height:1.4;"></div>
+
+            <div id="promo-active-tag" style="display:none; margin-top:10px; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px;">
+              <span style="font-size:13px; font-weight:600; color:#2e7d32;" id="promo-active-text"></span>
+              <button type="button" id="remove-promo-btn" style="background:none; border:none; cursor:pointer; color:var(--error); font-size:12px; font-weight:600; padding:2px 6px;">Remove</button>
             </div>
 
           </div>

@@ -39,7 +39,8 @@
       </nav>
 
       <div class="header-icons">
-        <button class="icon-btn theme-toggle-btn" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+        <button class="icon-btn theme-toggle-btn" id="theme-toggle" type="button" aria-label="Toggle theme"
+          title="Toggle theme">
           <span class="material-symbols-outlined theme-toggle-icon">dark_mode</span>
         </button>
         <button class="icon-btn" aria-label="Account" onclick="location.href='ethereal_commerce/account.html'">
@@ -65,10 +66,15 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
-      <div class="hero-bg"
-        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHPeqLUwTKfNvXHosl0iDln89gr06pXP-eL_plbIo742-y8mFqQQanItydMXHWJIBOF85pp4lE9DMz7GRDGYVcL10V_TfHlv3GxNV-tNa2dlpzmlJkBO9ENVxGdEMBzUWakbH0TpsV97qjApfFiXUU9ODePfpAdoGtjvDucjpuxyMvaGHy9Shrt81B1xR9B5GExUQ0nksA0LFt5DwdBsEQiTX3fjQPcZgq6uFv144NDktP0Vg1CHqc4g')">
-      </div>
+      <!-- Фоновое видео вместо картинки -->
+      <video class="hero-video" autoplay muted loop playsinline poster="ethereal_commerce/img/dining-hero.jpg">
+        <source src="ethereal_commerce/video/hero.mp4" type="video/mp4" />
+      </video>
+
+      <!-- Затемняющий градиент поверх видео для читаемости текста -->
       <div class="hero-gradient"></div>
+
+      <!-- Контент поверх видео -->
       <div class="hero-content">
         <span class="chip chip-champagne chip-pill animate-fade-in-up"
           style="margin-bottom:24px; letter-spacing:0.08em;">NEW COLLECTION</span>
@@ -79,27 +85,9 @@
           Explore Collection
           <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
         </a>
-        <div class="sale-banner-home">
-
-          <span class="chip chip-sale">
-            SALE
-          </span>
-
-          <span class="sale-banner-text">
-            Selected pieces up to 25% off
-          </span>
-
-          <a href="ethereal_commerce/sale.html" class="sale-banner-link">
-            Shop Sale
-
-            <span class="material-symbols-outlined">
-              arrow_forward
-            </span>
-          </a>
-
-        </div>
       </div>
     </section>
+
 
 
     <!-- Curated Categories -->
@@ -150,8 +138,7 @@
 
           <!-- Category 4: Dining Essentials (wide) -->
           <a class="category-card" href="ethereal_commerce/category.html?category=dining" id="cat-dining">
-            <div class="category-card-bg"
-              style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCw8yL1oUB9qmaM4wsCWbJ4dbAaqbqVesX1KOJizkXs0JEuaMqxwJ3KQV5yThuAlKl3qojWM8FgIQp-WQnXbmQlWQcyI8P9RKJE1EPKHX-G0RsoBuKl4ZKJFWxPkrbsuJsEvwjdKXypvzg-0Wa6rbWJ0tgdEimeP8aa3lEVWKsszPTmlAZd_BudirIArFjV4ni4_6EjC3nTyiUgdBR0uCbrfcT033Wx6IX3gN0wy4YE60YPEA-kid8diw')">
+            <div class="category-card-bg" style="background-image: url('ethereal_commerce/img/dining-hero.jpg')">
             </div>
             <div class="category-card-overlay"></div>
             <div class="category-card-content">

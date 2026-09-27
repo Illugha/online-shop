@@ -295,7 +295,7 @@ const curatedCategories = {
     dining: {
         title: 'Dining Essentials',
         description: 'Pieces for the modern table, made to turn simple meals and shared moments into everyday rituals.',
-        image: 'https://images.unsplash.com/photo-1615865417236-d67f16812835?w=800&q=80',
+        image: 'img/dining-hero.jpg',
         imageAlt: 'Ceramic tableware and linen for a modern table',
         shopHref: 'shop.html?category=dining',
         focus: ['Table linens', 'Serving pieces', 'Gathering essentials']
@@ -1221,6 +1221,58 @@ window.catalogProducts =
 window.products =
     products;
 
+// =====================================================
+// LUXE PROMO CODES SYSTEM
+// =====================================================
+window.LuxePromo = {
+    KEY: 'luxeAppliedPromo',
+    CODES: {
+        'LUXE15': { percent: 15, label: 'Скидка 15% (LUXE Privilege)' },
+        'LUXE10': { percent: 10, label: 'Скидка 10% (Welcome Offer)' },
+        'LUXE20': { percent: 20, label: 'Скидка 20% (VIP Club)' },
+        'SALE25': { percent: 25, label: 'Скидка 25% (Seasonal Sale)' },
+        'SPRING15': { percent: 15, label: 'Скидка 15% (Spring Collection)' }
+    },
+    getApplied() {
+        try {
+            return JSON.parse(localStorage.getItem(this.KEY));
+        } catch {
+            return null;
+        }
+    },
+    apply(code) {
+        if (!code) {
+            return { success: false, message: 'Пожалуйста, введите промокод.' };
+        }
+        const cleanCode = String(code).trim().toUpperCase();
+        const promo = this.CODES[cleanCode];
+        if (!promo) {
+            return {
+                success: false,
+                message: 'Неверный промокод. Попробуйте LUXE15 или LUXE10.'
+            };
+        }
+        const promoData = {
+            code: cleanCode,
+            percent: promo.percent,
+            label: promo.label
+        };
+        localStorage.setItem(this.KEY, JSON.stringify(promoData));
+        return {
+            success: true,
+            promo: promoData,
+            message: `Промокод ${cleanCode} успешно применен! ${promo.label}`
+        };
+    },
+    remove() {
+        localStorage.removeItem(this.KEY);
+    },
+    calculateDiscount(subtotal) {
+        const applied = this.getApplied();
+        if (!applied || !applied.percent || subtotal <= 0) return 0;
+        return Number((subtotal * (applied.percent / 100)).toFixed(2));
+    }
+};
 
 // =====================================================
 // DOM CONTENT LOADED
@@ -2888,6 +2940,153 @@ document.addEventListener(
                 showPage(pageFromUrl);
             });
         }
+
+        // =================================================
+        // PROMOTIONAL ADVERTISING MODAL
+        // =================================================
+        function initPromoModal() {
+            if (document.getElementById('promo-ad-dialog')) return;
+
+            const isRootPage = !window.location.pathname.includes('/ethereal_commerce/') &&
+                               !window.location.pathname.endsWith('ethereal_commerce');
+            const imgPath = isRootPage ? 'ethereal_commerce/img/promo-ad.jpg' : 'img/promo-ad.jpg';
+            const shopUrl = isRootPage ? 'ethereal_commerce/shop.html' : 'shop.html';
+
+            const dialog = document.createElement('dialog');
+            dialog.id = 'promo-ad-dialog';
+            dialog.className = 'promo-dialog';
+            dialog.setAttribute('closedby', 'any');
+            dialog.setAttribute('aria-labelledby', 'promo-ad-title');
+
+            dialog.innerHTML = `
+                <div class="promo-modal-body">
+                    <button type="button" class="promo-modal-close" id="promo-modal-close-btn" aria-label="Закрыть рекламу">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div class="promo-modal-media">
+                        <img class="promo-modal-img" src="${imgPath}" alt="LUXE Новая коллекция" loading="lazy">
+                        <div class="promo-modal-badge">Лимитированное предложение</div>
+                    </div>
+                    <div class="promo-modal-content">
+                        <div class="promo-eyebrow">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                            <span>LUXE PRIVILEGE</span>
+                        </div>
+                        <h2 class="promo-title" id="promo-ad-title">Скидка 15% на ваш первый заказ</h2>
+                        <p class="promo-text">
+                            Преобразите ваше пространство предметами из нашей новой коллекции. Активируйте эксклюзивный промокод при оформлении заказа.
+                        </p>
+                        <div class="promo-code-container">
+                            <span class="promo-code-value" id="promo-code-text">LUXE15</span>
+                            <button type="button" class="promo-copy-btn" id="promo-copy-btn">
+                                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span>
+                                <span class="copy-text">Скопировать</span>
+                            </button>
+                        </div>
+                        <a href="${shopUrl}" class="promo-action-btn" id="promo-shop-btn">
+                            <span>Перейти в каталог</span>
+                            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+                        </a>
+                        <p class="promo-disclaimer">*Скидка применяется на все категории товаров в корзине</p>
+                    </div>
+                </div>
+            `;
+
+            const trigger = document.createElement('button');
+            trigger.id = 'promo-floating-trigger';
+            trigger.className = 'promo-floating-trigger';
+            trigger.type = 'button';
+            trigger.setAttribute('aria-label', 'Открыть рекламное предложение');
+            trigger.innerHTML = `
+                <span class="material-symbols-outlined">redeem</span>
+                <span>Скидка 15%</span>
+            `;
+
+            document.body.appendChild(dialog);
+            document.body.appendChild(trigger);
+
+            const closeBtn = dialog.querySelector('#promo-modal-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    dialog.close();
+                });
+            }
+
+            const copyBtn = dialog.querySelector('#promo-copy-btn');
+            const codeText = dialog.querySelector('#promo-code-text');
+            if (copyBtn && codeText) {
+                copyBtn.addEventListener('click', async () => {
+                    const code = codeText.textContent.trim();
+                    if (window.LuxePromo) {
+                        window.LuxePromo.apply(code);
+                    }
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            await navigator.clipboard.writeText(code);
+                        } else {
+                            const textarea = document.createElement('textarea');
+                            textarea.value = code;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                        }
+                        copyBtn.classList.add('copied');
+                        copyBtn.innerHTML = `
+                            <span class="material-symbols-outlined" style="font-size:16px;">check</span>
+                            <span>Применен & скопирован!</span>
+                        `;
+                        setTimeout(() => {
+                            copyBtn.classList.remove('copied');
+                            copyBtn.innerHTML = `
+                                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span>
+                                <span class="copy-text">Скопировать</span>
+                            `;
+                        }, 2500);
+                    } catch (err) {
+                        console.warn('Не удалось скопировать промокод:', err);
+                    }
+                });
+            }
+
+            if (!('closedBy' in HTMLDialogElement.prototype)) {
+                dialog.addEventListener('click', (event) => {
+                    if (event.target !== dialog) return;
+                    const rect = dialog.getBoundingClientRect();
+                    const isInside = (
+                        rect.top <= event.clientY &&
+                        event.clientY <= rect.top + rect.height &&
+                        rect.left <= event.clientX &&
+                        event.clientX <= rect.left + rect.width
+                    );
+                    if (!isInside) {
+                        dialog.close();
+                    }
+                });
+            }
+
+            trigger.addEventListener('click', () => {
+                try {
+                    dialog.showModal();
+                } catch (e) {
+                    dialog.show();
+                }
+            });
+
+            const hasSeen = sessionStorage.getItem('luxe_promo_seen');
+            if (!hasSeen) {
+                setTimeout(() => {
+                    try {
+                        dialog.showModal();
+                        sessionStorage.setItem('luxe_promo_seen', 'true');
+                    } catch (e) {
+                        // Ignore if dialog already open
+                    }
+                }, 1800);
+            }
+        }
+
+        initPromoModal();
 
         // =================================================
         // FINAL CART BADGE

@@ -13,11 +13,25 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('cart-badge');
 
     const subtotalElement =
+        document.getElementById('cart-subtotal') ||
         document.querySelector(
             '.summary-line:nth-child(1) span:last-child'
         );
 
+    const discountLine =
+        document.getElementById('cart-discount-line');
+
+    const discountLabel =
+        document.getElementById('cart-discount-label');
+
+    const discountAmountElement =
+        document.getElementById('cart-discount-amount');
+
     const taxElement =
+        document.getElementById('cart-tax') ||
+        document.querySelector(
+            '.summary-line:nth-child(4) span:last-child'
+        ) ||
         document.querySelector(
             '.summary-line:nth-child(3) span:last-child'
         );
@@ -26,6 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(
             '.total-amount'
         );
+
+    const promoMessage =
+        document.getElementById('promo-message');
+
+    const promoActiveTag =
+        document.getElementById('promo-active-tag');
+
+    const promoActiveText =
+        document.getElementById('promo-active-text');
+
+    const removePromoBtn =
+        document.getElementById('remove-promo-btn');
 
 
     const TAX_RATE = 0.08;
@@ -452,15 +478,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 0
             );
 
+        let discount = 0;
+        const appliedPromo = window.LuxePromo ? window.LuxePromo.getApplied() : null;
 
-        const tax =
-            subtotal *
-            TAX_RATE;
+        if (appliedPromo && appliedPromo.percent && subtotal > 0) {
+            discount = Number((subtotal * (appliedPromo.percent / 100)).toFixed(2));
+            if (discountLine) discountLine.style.display = 'flex';
+            if (discountLabel) discountLabel.textContent = `Discount (${appliedPromo.code} -${appliedPromo.percent}%)`;
+            if (discountAmountElement) discountAmountElement.textContent = `-${formatPrice(discount)}`;
 
+            if (promoActiveTag) {
+                promoActiveTag.style.display = 'flex';
+                if (promoActiveText) {
+                    promoActiveText.textContent = `✓ ${appliedPromo.code} applied (-${appliedPromo.percent}%)`;
+                }
+            }
+        } else {
+            if (discountLine) discountLine.style.display = 'none';
+            if (promoActiveTag) promoActiveTag.style.display = 'none';
+        }
 
-        const total =
-            subtotal +
-            tax;
+        const discountedSubtotal = Math.max(0, subtotal - discount);
+        const tax = discountedSubtotal * TAX_RATE;
+        const total = discountedSubtotal + tax;
 
 
         if (subtotalElement) {
@@ -782,49 +822,62 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
 
+    function showPromoMessage(msg, isSuccess) {
+        if (!promoMessage) return;
+        promoMessage.textContent = msg;
+        promoMessage.style.display = 'block';
+        promoMessage.style.color = isSuccess ? '#2e7d32' : 'var(--error, #ba1a1a)';
+    }
+
     if (
         promoInput &&
         promoButton
     ) {
 
-        promoButton.addEventListener(
-            'click',
-            () => {
+        function handleApplyPromo() {
+            const code =
+                promoInput.value
+                    .trim()
+                    .toUpperCase();
 
-                const code =
-                    promoInput.value
-                        .trim()
-                        .toUpperCase();
-
-
-                if (!code) {
-
-                    alert(
-                        'Enter a promo code.'
-                    );
-
-                    return;
-                }
-
-
-                // Temporary demo promo
-                if (
-                    code ===
-                    'LUXE10'
-                ) {
-
-                    alert(
-                        'Promo code applied: 10% off.'
-                    );
-
-                } else {
-
-                    alert(
-                        'Invalid promo code.'
-                    );
-                }
+            if (!code) {
+                showPromoMessage('Пожалуйста, введите промокод.', false);
+                return;
             }
-        );
+
+            if (!window.LuxePromo) {
+                showPromoMessage('Система промокодов недоступна.', false);
+                return;
+            }
+
+            const result = window.LuxePromo.apply(code);
+            if (result.success) {
+                showPromoMessage(result.message, true);
+                promoInput.value = '';
+                updateSummary();
+            } else {
+                showPromoMessage(result.message, false);
+            }
+        }
+
+        promoButton.addEventListener('click', handleApplyPromo);
+
+        promoInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleApplyPromo();
+            }
+        });
+    }
+
+    if (removePromoBtn) {
+        removePromoBtn.addEventListener('click', () => {
+            if (window.LuxePromo) {
+                window.LuxePromo.remove();
+            }
+            showPromoMessage('Промокод удален.', true);
+            updateSummary();
+        });
     }
 
 

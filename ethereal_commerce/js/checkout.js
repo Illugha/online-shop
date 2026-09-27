@@ -407,14 +407,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 0
             );
 
+        const appliedPromo = window.LuxePromo ? window.LuxePromo.getApplied() : null;
+        let discount = 0;
+        if (appliedPromo && appliedPromo.percent && subtotal > 0) {
+            discount = Number((subtotal * (appliedPromo.percent / 100)).toFixed(2));
+        }
 
         const shipping = 0;
-
-        const tax =
-            subtotal * 0.08;
+        const discountedSubtotal = Math.max(0, subtotal - discount);
+        const tax = Number((discountedSubtotal * 0.08).toFixed(2));
 
         const total =
-            subtotal +
+            discountedSubtotal +
             shipping +
             tax;
 
@@ -422,6 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return {
             cart,
             subtotal,
+            discount,
+            appliedPromo,
             shipping,
             tax,
             total
@@ -439,6 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const {
             cart,
             subtotal,
+            discount,
+            appliedPromo,
             shipping,
             tax,
             total
@@ -579,6 +587,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 </div>
 
+                ${discount > 0 && appliedPromo ? `
+                <div class="summary-line" style="color: #2e7d32; font-weight: 600;">
+                    <span>
+                        Discount (${appliedPromo.code} -${appliedPromo.percent}%)
+                    </span>
+                    <span>
+                        -${formatPrice(discount)}
+                    </span>
+                </div>
+                ` : ''}
 
                 <div class="summary-line">
 
@@ -610,6 +628,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
             </div>
 
+            <!-- PROMO CODE BOX IN CHECKOUT -->
+            <div class="checkout-promo-box" style="margin: 16px 0; padding: 12px 14px; background: var(--surface-container-low); border-radius: 12px; border: 1px dashed var(--outline-variant);">
+                ${appliedPromo ? `
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 13px; font-weight: 600; color: #2e7d32;">
+                            ✓ Промокод ${appliedPromo.code} (-${appliedPromo.percent}%)
+                        </span>
+                        <button type="button" id="checkout-remove-promo" style="background: none; border: none; color: var(--error); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 4px;">Удалить</button>
+                    </div>
+                ` : `
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="checkout-promo-input" class="input-field" placeholder="Промокод (e.g. LUXE15)" style="padding: 8px 12px; font-size: 13px; flex-grow: 1;" />
+                        <button type="button" id="checkout-apply-promo" class="btn btn-secondary" style="padding: 8px 14px; font-size: 13px; white-space: nowrap;">Применить</button>
+                    </div>
+                    <div id="checkout-promo-error" style="display: none; color: var(--error); font-size: 12px; margin-top: 6px;"></div>
+                `}
+            </div>
+
 
             <div
                 class="summary-total"
@@ -628,6 +664,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
         `;
 
+        // Event listeners for promo in checkout
+        const checkoutApplyBtn = orderSummary.querySelector('#checkout-apply-promo');
+        const checkoutPromoInput = orderSummary.querySelector('#checkout-promo-input');
+        const checkoutPromoError = orderSummary.querySelector('#checkout-promo-error');
+        const checkoutRemoveBtn = orderSummary.querySelector('#checkout-remove-promo');
+
+        if (checkoutApplyBtn && checkoutPromoInput) {
+            const applyCheckoutPromo = () => {
+                const code = checkoutPromoInput.value.trim().toUpperCase();
+                if (!code) {
+                    if (checkoutPromoError) {
+                        checkoutPromoError.textContent = 'Пожалуйста, введите промокод.';
+                        checkoutPromoError.style.display = 'block';
+                    }
+                    return;
+                }
+                if (window.LuxePromo) {
+                    const res = window.LuxePromo.apply(code);
+                    if (res.success) {
+                        renderOrderSummary();
+                    } else if (checkoutPromoError) {
+                        checkoutPromoError.textContent = res.message;
+                        checkoutPromoError.style.display = 'block';
+                    }
+                }
+            };
+
+            checkoutApplyBtn.addEventListener('click', applyCheckoutPromo);
+            checkoutPromoInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    applyCheckoutPromo();
+                }
+            });
+        }
+
+        if (checkoutRemoveBtn) {
+            checkoutRemoveBtn.addEventListener('click', () => {
+                if (window.LuxePromo) {
+                    window.LuxePromo.remove();
+                    renderOrderSummary();
+                }
+            });
+        }
 
         if (placeOrderButton) {
 
@@ -851,6 +931,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     subtotal:
                         order.subtotal,
 
+                    discount:
+                        order.discount || 0,
+
+                    promoCode:
+                        order.appliedPromo ? order.appliedPromo.code : null,
+
                     shipping:
                         order.shipping,
 
@@ -873,6 +959,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     'luxeOrders',
                     JSON.stringify(orders)
                 );
+
+                if (window.LuxePromo) {
+                    window.LuxePromo.remove();
+                }
 
 
                 if (successModal) {
@@ -907,6 +997,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem(
                     CART_KEY
                 );
+                if (window.LuxePromo) {
+                    window.LuxePromo.remove();
+                }
 
                 window.location.href =
                     '../index.html';
