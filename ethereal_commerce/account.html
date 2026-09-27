@@ -10,6 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <script>
+        (function () {
+            var saved = localStorage.getItem('luxe-theme');
+            var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -22,6 +29,9 @@
                 <a class="nav-link" href="shop.html">Shop All</a>
             </nav>
             <div class="header-icons">
+                <button class="icon-btn theme-toggle-btn" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+                    <span class="material-symbols-outlined theme-toggle-icon">dark_mode</span>
+                </button>
                 <button class="icon-btn" aria-label="Account" onclick="location.href='account.html'">
                     <span class="material-symbols-outlined">person</span>
                 </button>

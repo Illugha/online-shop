@@ -89,6 +89,84 @@
   --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
+/* --- Dark Theme Custom Properties --- */
+[data-theme="dark"] {
+  /* Colors — Surface */
+  --surface: #101317;
+  --surface-dim: #090b0e;
+  --surface-bright: #1c2227;
+  --surface-container-lowest: #0c0e11;
+  --surface-container-low: #14181c;
+  --surface-container: #181d22;
+  --surface-container-high: #20262c;
+  --surface-container-highest: #283037;
+  --on-surface: #f1f4f6;
+  --on-surface-variant: #9aa4ab;
+  --inverse-surface: #f0f2f4;
+  --inverse-on-surface: #101317;
+  --surface-variant: #222931;
+  --surface-tint: #8cd6d6;
+
+  /* Colors — Primary */
+  --primary: #ffffff;
+  --on-primary: #0a0c0f;
+  --primary-container: #dce2e6;
+  --on-primary-container: #0a0c0f;
+  --inverse-primary: #032121;
+  --primary-fixed: #20272e;
+  --primary-fixed-dim: #181d22;
+  --on-primary-fixed: #ffffff;
+  --on-primary-fixed-variant: #b0bac0;
+
+  /* Colors — Secondary (Refined Champagne Gold) */
+  --secondary: #deb881;
+  --on-secondary: #241905;
+  --secondary-container: #47361b;
+  --on-secondary-container: #fbe0b6;
+  --secondary-fixed: #47361b;
+  --secondary-fixed-dim: #382a13;
+  --on-secondary-fixed: #fbe0b6;
+  --on-secondary-fixed-variant: #deb881;
+
+  /* Colors — Tertiary */
+  --tertiary: #e4a78a;
+  --on-tertiary: #3b1c0e;
+  --tertiary-container: #522b19;
+  --on-tertiary-container: #ffd5c1;
+  --tertiary-fixed: #522b19;
+  --tertiary-fixed-dim: #3f1f10;
+  --on-tertiary-fixed: #ffd5c1;
+  --on-tertiary-fixed-variant: #e4a78a;
+
+  /* Colors — Error */
+  --error: #ff7070;
+  --on-error: #ffffff;
+  --error-container: #5c1818;
+  --on-error-container: #ffd5d5;
+
+  /* Colors — Background */
+  --background: #090b0e;
+  --on-background: #f1f4f6;
+
+  /* Colors — Outline */
+  --outline: #707b85;
+  --outline-variant: #262e36;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.75);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"],
+html:not([data-theme="dark"]) {
+  color-scheme: light;
+}
+
 /* --- Reset & Base --- */
 *,
 *::before,
@@ -2822,4 +2900,299 @@ ol {
   .spec-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* =====================================================
+   THEME TOGGLE BUTTON & SMOOTH TRANSITION
+   ===================================================== */
+.icon-btn.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--primary);
+  background: transparent;
+  transition: background-color 0.2s ease, transform 0.25s ease, color 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  opacity: 1;
+}
+
+.icon-btn.theme-toggle-btn:hover {
+  opacity: 1;
+  background: var(--surface-container);
+  transform: rotate(15deg) scale(1.08);
+}
+
+.icon-btn.theme-toggle-btn:active {
+  transform: rotate(15deg) scale(0.92);
+}
+
+.theme-toggle-btn .theme-toggle-icon {
+  font-size: 22px;
+  line-height: 1;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+}
+
+[data-theme="dark"] .icon-btn.theme-toggle-btn {
+  color: #ffd166;
+}
+
+[data-theme="dark"] .icon-btn.theme-toggle-btn:hover {
+  background: var(--surface-container-high);
+  color: #ffe082;
+  transform: rotate(-15deg) scale(1.08);
+}
+
+/* Smooth transition when toggling themes */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+/* =====================================================
+   DARK MODE COMPONENT ENHANCEMENTS
+   ===================================================== */
+[data-theme="dark"] .site-header {
+  background: rgba(16, 19, 23, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--outline-variant);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .nav-links.open {
+  background: var(--surface);
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+[data-theme="dark"] .hero-gradient {
+  background: linear-gradient(to top, rgba(9, 11, 14, 0.96) 0%, rgba(9, 11, 14, 0.4) 60%, transparent 100%);
+}
+
+[data-theme="dark"] .sale-banner-home {
+  background: rgba(20, 24, 29, 0.9);
+  border: 1px solid var(--surface-variant);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .sale-banner-text,
+[data-theme="dark"] .sale-banner-link {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .category-card {
+  border: 1px solid var(--surface-variant);
+}
+
+[data-theme="dark"] .category-card-overlay {
+  background: linear-gradient(to top, rgba(9, 11, 14, 0.88) 0%, rgba(9, 11, 14, 0.25) 60%, transparent 100%);
+}
+
+[data-theme="dark"] .product-card-image {
+  background: var(--surface-container-low);
+  border: 1px solid var(--surface-variant);
+}
+
+[data-theme="dark"] .product-card-image .quick-add {
+  background: rgba(20, 24, 29, 0.92);
+  color: #ffffff;
+  border: 1px solid var(--surface-variant);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .product-card-image .quick-add:hover {
+  background: #ffffff;
+  color: #090b0e;
+}
+
+[data-theme="dark"] .btn-primary {
+  background: #ffffff;
+  color: #090b0e;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: #dce2e6;
+  color: #090b0e;
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .btn-secondary {
+  border-color: var(--outline);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--surface-container-high);
+  border-color: #ffffff;
+}
+
+[data-theme="dark"] .input-field,
+[data-theme="dark"] .select-field {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+  color: var(--on-background);
+}
+
+[data-theme="dark"] .input-field:focus,
+[data-theme="dark"] .select-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .main-image {
+  background: var(--surface-container-low);
+  border: 1px solid var(--surface-variant);
+}
+
+[data-theme="dark"] .thumb {
+  background: var(--surface-container-low);
+  border-color: var(--surface-variant);
+}
+
+[data-theme="dark"] .thumb.active {
+  border-color: #ffffff;
+}
+
+[data-theme="dark"] .zoom-result {
+  background-color: var(--surface-container-lowest);
+  border-color: var(--surface-variant);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.75);
+}
+
+[data-theme="dark"] .zoom-lens {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .size-btn {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+  color: var(--on-surface);
+}
+
+[data-theme="dark"] .size-btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .size-btn.active {
+  background: var(--surface-container-high);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .qty-selector {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .qty-selector .qty-value {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .wishlist-action {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+  color: var(--on-surface-variant);
+}
+
+[data-theme="dark"] .wishlist-action:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .cart-item {
+  background: var(--surface-container-lowest);
+  border-color: var(--surface-variant);
+}
+
+[data-theme="dark"] .cart-item-image {
+  background: var(--surface-container-low);
+}
+
+[data-theme="dark"] .order-summary {
+  background: var(--surface-container-lowest);
+  border-color: var(--surface-variant);
+}
+
+[data-theme="dark"] .wishlist-card {
+  background: var(--surface-container-lowest);
+  border-color: var(--surface-variant);
+}
+
+[data-theme="dark"] .wishlist-card-image-wrap {
+  background: var(--surface-container-low);
+  border-bottom: 1px solid var(--surface-variant);
+}
+
+[data-theme="dark"] .wishlist-card-remove {
+  background: rgba(16, 19, 23, 0.85);
+  border: 1px solid var(--surface-variant);
+  color: var(--on-surface-variant);
+}
+
+[data-theme="dark"] .wishlist-card-remove:hover {
+  background: var(--error);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .auth-card {
+  background: var(--surface-container-lowest);
+  border-color: var(--surface-variant);
+}
+
+[data-theme="dark"] .saved-card-box {
+  background: var(--surface-container-low);
+  border-color: #ffffff;
+}
+
+[data-theme="dark"] .payment-method {
+  background: var(--surface-container-lowest);
+  border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .payment-method:hover,
+[data-theme="dark"] .payment-method.active {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .modal-content {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--surface-variant);
+}
+
+[data-theme="dark"] .site-footer {
+  background: var(--surface-container);
+  border-top: 1px solid var(--outline-variant);
+}
+
+/* Custom dark scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #090b0e;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #232b32;
+  border-radius: var(--radius-full);
+  border: 2px solid #090b0e;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #39444e;
 }

@@ -3,6 +3,119 @@
  */
 
 // =====================================================
+// THEME MANAGEMENT (Light / Dark Mode)
+// =====================================================
+(function initThemeSystem() {
+    const THEME_STORAGE_KEY = 'luxe-theme';
+
+    function getPreferredTheme() {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        if (saved === 'dark' || saved === 'light') {
+            return saved;
+        }
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+    }
+
+    function applyTheme(theme, animate = false) {
+        const root = document.documentElement;
+        if (animate) {
+            root.classList.add('theme-transitioning');
+            setTimeout(() => {
+                root.classList.remove('theme-transitioning');
+            }, 350);
+        }
+
+        root.setAttribute('data-theme', theme);
+
+        // Update meta theme-color for mobile browsers
+        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (!metaThemeColor) {
+            metaThemeColor = document.createElement('meta');
+            metaThemeColor.name = 'theme-color';
+            document.head.appendChild(metaThemeColor);
+        }
+        metaThemeColor.content = theme === 'dark' ? '#090b0e' : '#f8f9fa';
+
+        updateThemeButtons(theme);
+    }
+
+    function updateThemeButtons(theme) {
+        const isDark = theme === 'dark';
+        const buttons = document.querySelectorAll('.theme-toggle-btn, #theme-toggle');
+        buttons.forEach((btn) => {
+            const icon = btn.querySelector('.theme-toggle-icon, .material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            }
+            btn.setAttribute('aria-label', isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему');
+            btn.setAttribute('title', isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему');
+        });
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+        applyTheme(next, true);
+    }
+
+    window.toggleTheme = toggleTheme;
+    window.applyTheme = applyTheme;
+    window.getPreferredTheme = getPreferredTheme;
+
+    // Apply immediately
+    const initialTheme = getPreferredTheme();
+    applyTheme(initialTheme, false);
+
+    function setupThemeToggles() {
+        // Auto-inject if missing in .header-icons
+        const headerIcons = document.querySelector('.header-icons');
+        if (headerIcons && !document.getElementById('theme-toggle') && !headerIcons.querySelector('.theme-toggle-btn')) {
+            const btn = document.createElement('button');
+            btn.className = 'icon-btn theme-toggle-btn';
+            btn.id = 'theme-toggle';
+            btn.type = 'button';
+            btn.innerHTML = `<span class="material-symbols-outlined theme-toggle-icon">${initialTheme === 'dark' ? 'light_mode' : 'dark_mode'}</span>`;
+            btn.setAttribute('aria-label', initialTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему');
+            btn.setAttribute('title', initialTheme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему');
+            btn.addEventListener('click', toggleTheme);
+            headerIcons.insertBefore(btn, headerIcons.firstChild);
+        } else {
+            const buttons = document.querySelectorAll('.theme-toggle-btn, #theme-toggle');
+            buttons.forEach((btn) => {
+                btn.onclick = toggleTheme;
+            });
+            updateThemeButtons(document.documentElement.getAttribute('data-theme') || initialTheme);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupThemeToggles);
+    } else {
+        setupThemeToggles();
+    }
+
+    // Cross-tab synchronization
+    window.addEventListener('storage', (e) => {
+        if (e.key === THEME_STORAGE_KEY && (e.newValue === 'dark' || e.newValue === 'light')) {
+            applyTheme(e.newValue, true);
+        }
+    });
+
+    // Listen to system changes if user hasn't explicitly set preference
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+                applyTheme(e.matches ? 'dark' : 'light', true);
+            }
+        });
+    }
+})();
+
+// =====================================================
 // PRODUCT DATABASE
 // =====================================================
 
