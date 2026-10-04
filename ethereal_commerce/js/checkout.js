@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const CART_KEY = 'luxeCart';
 
-    const WAYFORPAY_URL =
-        'https://secure.wayforpay.com/button/bb5de68878d2a';
+    const WAYFORPAY_URL = "https://secure.wayforpay.com/button/b9e4c24615e14"
 
     const checkoutForm =
         document.getElementById('checkout-form');
