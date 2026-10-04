@@ -1204,7 +1204,10 @@ ol {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(248, 249, 250, 0.8), transparent 60%, transparent);
+
+
+  background: linear-gradient(to top, rgba(248, 249, 250, 0.8), transparent 20%, transparent);
+
 }
 
 .hero-content {
@@ -1224,6 +1227,7 @@ ol {
 }
 
 .hero-content p {
+
   color: #032121;
   font-weight: 500;
   text-shadow: 0 1px 3px rgba(255, 255, 255, 0.85);
@@ -2993,10 +2997,6 @@ html.theme-transitioning *::after {
   background: linear-gradient(to top, rgba(9, 11, 14, 0.96) 0%, rgba(9, 11, 14, 0.4) 60%, transparent 100%);
 }
 
-[data-theme="dark"] .hero-content p {
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-}
 
 [data-theme="dark"] .sale-banner-home {
   background: rgba(20, 24, 29, 0.9);
@@ -3235,9 +3235,10 @@ html.theme-transitioning *::after {
   opacity: 0;
   transform: scale(0.95) translateY(16px);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              overlay 0.35s allow-discrete,
-              display 0.35s allow-discrete;
+
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    overlay 0.35s allow-discrete,
+    display 0.35s allow-discrete;
 }
 
 .promo-dialog[open] {
@@ -3258,8 +3259,10 @@ html.theme-transitioning *::after {
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   transition: opacity 0.35s ease,
-              overlay 0.35s allow-discrete,
-              display 0.35s allow-discrete;
+
+    overlay 0.35s allow-discrete,
+    display 0.35s allow-discrete;
+
 }
 
 .promo-dialog[open]::backdrop {
@@ -3486,9 +3489,13 @@ html.theme-transitioning *::after {
 }
 
 @keyframes promoPulse {
-  0%, 100% {
+
+
+  0%,
+  100% {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
   }
+
   50% {
     box-shadow: 0 10px 25px -2px rgba(184, 151, 88, 0.4);
   }
@@ -3499,20 +3506,30 @@ html.theme-transitioning *::after {
   .promo-modal-body {
     grid-template-columns: 1fr;
   }
+
+
+
   .promo-modal-media {
     min-height: 180px;
     max-height: 200px;
   }
+
+
   .promo-modal-content {
     padding: 24px 20px 20px;
   }
+
   .promo-title {
     font-size: 20px;
   }
+
+
   .promo-floating-trigger {
     bottom: 16px;
     left: 16px;
     padding: 8px 14px;
     font-size: 12px;
   }
+
 }
+
