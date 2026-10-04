@@ -1224,7 +1224,9 @@ ol {
 }
 
 .hero-content p {
-  color: var(--on-surface-variant);
+  color: #032121;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.85);
   margin-bottom: 40px;
   max-width: 640px;
 }
@@ -2991,6 +2993,11 @@ html.theme-transitioning *::after {
   background: linear-gradient(to top, rgba(9, 11, 14, 0.96) 0%, rgba(9, 11, 14, 0.4) 60%, transparent 100%);
 }
 
+[data-theme="dark"] .hero-content p {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
 [data-theme="dark"] .sale-banner-home {
   background: rgba(20, 24, 29, 0.9);
   border: 1px solid var(--surface-variant);
@@ -3508,4 +3515,4 @@ html.theme-transitioning *::after {
     padding: 8px 14px;
     font-size: 12px;
   }
-}
+}
