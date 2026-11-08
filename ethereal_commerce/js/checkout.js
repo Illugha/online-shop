@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('close-modal');
 
 
+    placeOrderButton.addEventListener('click', () => {
+        gtag('event', 'order_button_clicked');
+        console.log('Information submitted!');
+    })
+
     // =====================================================
     // СПОСОБИ ОПЛАТИ
     // =====================================================
